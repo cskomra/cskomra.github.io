@@ -281,7 +281,7 @@ var projects = {
 				"title": "Udacity Mug",
 				"dates": "2015",
 				"description": "Web page based on PDF design mockup using HTML and CSS",
-				"images": ["projects/udacitymug/udacitymug-sm.jpg"],
+				"images": ["projects/udacitymug/udacitymugsm.JPG"],
 				"url": "projects/udacitymug/um/index.html"
 			}
 		],
