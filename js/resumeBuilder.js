@@ -19,7 +19,7 @@ var bio = {
 		"Mentoring",
 		"Robotics"
 	],
-	"biopic": "images/connie02.gif",
+	"biopic": "images/Connie03.jpg",
 	"display": function(){
 		var formattedName = HTMLheaderName.replace("%data%", this.name);
 		var formattedRole = HTMLheaderRole.replace("%data%", this.role);
