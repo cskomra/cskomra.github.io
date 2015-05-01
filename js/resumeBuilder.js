@@ -264,6 +264,13 @@ var projects = {
 	"project":
 		[
 			{
+				"title": "Bug Evaders Arcade Game",
+				"dates": "2015",
+				"description": "Frogger-like arcade game.",
+				"images": ["projects/arcadegame/bugevaders.JPG"],
+				"url": "projects/arcadegame/index.html"
+			},
+			{
 				"title": "Search Engine",
 				"dates": "2015",
 				"description": "Search engine with key components including a crawler, an index, and a page rank algorithm",
