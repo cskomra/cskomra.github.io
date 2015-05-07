@@ -264,28 +264,28 @@ var projects = {
 	"project":
 		[
 			{
-				"title": "<a href='#game'>Bug Evaders Arcade Game</a>",
+				"title": "Bug Evaders Arcade Game",
 				"dates": "2015",
 				"description": "Frogger-like arcade game.",
 				"images": ["projects/arcadegame/bugevaders.JPG"],
 				"url": "projects/arcadegame/index.html"
 			},
 			{
-				"title": "<a href='#search'>Search Engine</a>",
+				"title": "Search Engine",
 				"dates": "2015",
 				"description": "Search engine with key components including a crawler, an index, and a page rank algorithm",
 				"images": ["projects/searchengine/searchengine.jpg"],
 				"url": "projects/searchengine/searchengine.txt"
 			},
 			{
-				"title": "<a href='#social'>Social Network</a>",
+				"title": "Social Network",
 				"dates": "2015",
 				"description": "Relationships organized into social network properties and functions",
 				"images": ["projects/socialnetwork/socialnetwork.jpg"],
 				"url": "projects/socialnetwork/socialnetwork.txt"
 			},
 			{
-				"title": "<a href='#product'>Udacity Mug</a>",
+				"title": "Udacity Mug",
 				"dates": "2015",
 				"description": "Web page based on PDF design mockup using HTML and CSS",
 				"images": ["projects/udacitymug/udacitymugsm.JPG"],
