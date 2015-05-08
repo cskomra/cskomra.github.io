@@ -211,7 +211,7 @@ var work = {
 				"url": "http://strategicpersonalfinance.com/",
 				"title": "Founder",
 				"location": "Powell, OH",
-				"dates": "2005 - present",
+				"dates": "2015 - present",
 				"description": "Preparing to help millions of people grow their finances through apps and mobile computing, SPF creates tools that bring financial planning services to non-consumers and over-serviced existing financial planning clients."
 			},
 			{
