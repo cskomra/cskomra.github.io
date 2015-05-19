@@ -98,6 +98,10 @@ a {
   line-height: 28px;
 }
 
+#role {
+  font-size: 20px;
+}
+
 #skills {
   text-align: left;
 }
