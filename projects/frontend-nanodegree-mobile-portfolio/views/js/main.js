@@ -502,7 +502,7 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
   frame++;
-  //window.performance.mark("mark_start_frame");
+  window.performance.mark("mark_start_frame");
 
   //Is there a faster way to access the DOM than querySelectorAll?
   var items = document.getElementsByClassName('mover');
