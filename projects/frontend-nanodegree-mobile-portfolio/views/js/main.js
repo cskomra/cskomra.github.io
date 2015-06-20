@@ -504,17 +504,15 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  //Is there a faster way to access the DOM than querySelectorAll?
   var items = document.getElementsByClassName('mover');
-
-
+  var cachedScrollTop = document.body.scrollTop;
   var offset = 0;
   for (var i = 0; i < items.length; i++) {
     if (offset > 4){
       offset = 0;
     }
-    var phase = Math.sin((document.body.scrollTop / 1250) + offset);
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';  //THIS IS FINE
+    phase=Math.sin((cachedScrollTop/1250)+offset);
+    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
     offset++;
   }
 
@@ -542,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // I could only see a handful of pizzas that are annimated on the screen at any given scroll.
   //analyze each line of code, make as efficient as possible
   //removing i < 200
-  for (var i = 0; i < 40; i++) {
+  for (var i = 0; i < 32; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
