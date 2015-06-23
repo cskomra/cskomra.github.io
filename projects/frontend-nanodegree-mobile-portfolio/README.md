@@ -46,7 +46,7 @@ Changes have been made in `main.js` so that the time it takes to resize pizzas o
 
 #####OPTIMIZATIONS for `changePizzaSizes()`
 1. Use `getElementsByClassName` to get and cache all `randomPizzaContainer` objects
-2. Pull vars `dx`, `newwidth` outside for loop
+2. Pull vars `dx`, `newwidth` outside `for` loop
 
 #####OPTIMIZATIONS for transforming `.mover` class
 1. Add `willChange` style attribute with custom-ident, `width`.
