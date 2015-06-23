@@ -21,9 +21,9 @@ The `index.html` file and other resources of this website have been modified to 
 The `views/js/main.js` file of this website has been edited to include the following optimization- and perforance-related changes such that `pizza.html` will run at 60 frames per second or better:
 
 #####OPTIMIZATIONS for `updatePostions()`
-1. Use getElementsByClassName rather than querySelectAll
+1. Use `getElementsByClassName` rather than `querySelectAll`
 2. Move the sliding background pizzas based on a *cached* scroll position
-3. Use 1 of 5 *offset* values (0, 1, 2, 3, or 4) to calculate 5 phase[offset]s
+3. Use 1 of 5 *offset* values (0, 1, 2, 3, or 4) to calculate 5 `phase[offset]`s
 
 #####OPTIMIZATIONS for `DOMContentLoaded` EventListener
 1. Create 40 pizzas rather than 200 (5 rows, 8 cols).  
@@ -42,10 +42,10 @@ See table:  [Global Stats Screen Sizes, 2015](http://www.hobo-web.co.uk/wp-conte
 
 ####Part 3: Optimize Resizing Pizzas in `pizza.html`
 
-Changes have been made in `main.js` so that the time it takes to resize pizzas on `pizza.html` is less than 5 ms (as shown in the browser console).
+Changes have been made in `main.js` so that the time it takes to resize pizzas on `pizza.html` is less than 5ms (as shown in the browser console).
 
 #####OPTIMIZATIONS for `changePizzaSizes()`
-1. Use getElementsByClassName to get and cache all randomPizzaContainer objects
+1. Use `getElementsByClassName` to get and cache all `randomPizzaContainer` objects
 2. Pull vars `dx`, `newwidth` outside for loop
 
 #####OPTIMIZATIONS for transforming `.mover` class
