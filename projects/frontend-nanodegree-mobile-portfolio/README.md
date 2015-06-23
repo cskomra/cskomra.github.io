@@ -58,3 +58,6 @@ Changes have been made in `main.js` so that the time it takes to resize pizzas o
 3. Scroll Down to the Pizza Lever Slider on the page
 4. Use the lever to resize pizzas
 5. Check the console for "Time to resize pizzas"
+
+### Viewing Optimization Comments in `main.js`
+The main.js file that runs with this project has been minified and therefore has no comments.  However, you may access a version which includes inline comments about each of the above optimizations [here](https://github.com/cskomra/cskomra.github.io/blob/master/projects/frontend-nanodegree-mobile-portfolio/views/js/main-withComments.js "main.js with optimization comments"). 
