@@ -10,8 +10,8 @@ The `index.html` file and other resources of this website have been modified to 
 #####*To check PageSpeed Insights for index.html:*
 
 1. [Open PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/ "PageSpeed Insights") 
-1. Insert the following URL:
-```http://cskomra.github.io/projects/frontend-nanodegree-mobile-portfolio/index.html
+1. Insert the following URL:  
+ ```http://cskomra.github.io/projects/frontend-nanodegree-mobile-portfolio/index.html
   ```
 2. Check the scores for both desktop and mobile
 
