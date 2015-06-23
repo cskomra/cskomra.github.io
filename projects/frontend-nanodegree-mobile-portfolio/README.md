@@ -1,73 +1,60 @@
 ## Website Performance Optimization portfolio project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
-
-To get started, check out the repository, inspect the code,
+As web applications become increasingly interactive and accessed on different devices there are a variety of opportunities in which performance issues can hinder the user experience. In this project, I identify a number of those performance issues and showcase my skills in fixing them.
 
 ### Getting started
 
-####Part 1: Optimize PageSpeed Insights score for index.html
+####Part 1: Optimize `index.html`  
+The `index.html` file and other resources of this website have been modified to achieve a target PageSpeed score of above 90 for both desktop and mobile devices.
 
-Some useful tips to help you get started:
+#####*To check PageSpeed Insights for index.html:*
 
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
-
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
+1. [Open PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/ "PageSpeed Insights") 
+1. Insert the following URL:
+```http://cskomra.github.io/projects/frontend-nanodegree-mobile-portfolio/index.html
   ```
+2. Check the scores for both desktop and mobile
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
 
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ngrok 8080
-  ```
+####Part 2: Optimize Frames per Second in `pizza.html`
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
+The `views/js/main.js` file of this website has been edited to include the following optimization- and perforance-related changes such that `pizza.html` will run at 60 frames per second or better:
 
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+#####OPTIMIZATIONS for `updatePostions()`
+1. Use getElementsByClassName rather than querySelectAll
+2. Move the sliding background pizzas based on a *cached* scroll position
+3. Use 1 of 5 *offset* values (0, 1, 2, 3, or 4) to calculate 5 phase[offset]s
 
-####Part 2: Optimize Frames per Second in pizza.html
+#####OPTIMIZATIONS for `DOMContentLoaded` EventListener
+1. Create 40 pizzas rather than 200 (5 rows, 8 cols).  
+Five rows of eight columns will cover all screen sizes.  The bottom row, img top calculates to 1024px.  
+See table:  [Global Stats Screen Sizes, 2015](http://www.hobo-web.co.uk/wp-content/uploads/G-ww-mar-may-2015.jpg "Global Statistics on Screen Sizes, 2015")  
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
 
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
+#####*To check frames per second:*
+1. Open `views/pizza.html` in Google Chrome:  
+[http://cskomra.github.io/projects/frontend-nanodegree-mobile-portfolio/views/pizza.html](http://cskomra.github.io/projects/frontend-nanodegree-mobile-portfolio/views/pizza.html "pizza.html")
+2. Go to the Timeline Tab in Developer Tools
+3. Click to Record
+4. Scroll down for a couple of seconds
+5. Stop recording
+6. View recorded results
 
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
+####Part 3: Optimize Resizing Pizzas in `pizza.html`
 
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
+Changes have been made in `main.js` so that the time it takes to resize pizzas on `pizza.html` is less than 5 ms (as shown in the browser console).
 
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+#####OPTIMIZATIONS for `changePizzaSizes()`
+1. Use getElementsByClassName to get and cache all randomPizzaContainer objects
+2. Pull vars `dx`, `newwidth` outside for loop
 
-### Sample Portfolios
+#####OPTIMIZATIONS for transforming `.mover` class
+1. Add `willChange` style attribute with custom-ident, `width`.
 
-Feeling uninspired by the portfolio? Here's a list of cool portfolios I found after a few minutes of Googling.
-
-* <a href="http://www.reddit.com/r/webdev/comments/280qkr/would_anybody_like_to_post_their_portfolio_site/">A great discussion about portfolios on reddit</a>
-* <a href="http://ianlunn.co.uk/">http://ianlunn.co.uk/</a>
-* <a href="http://www.adhamdannaway.com/portfolio">http://www.adhamdannaway.com/portfolio</a>
-* <a href="http://www.timboelaars.nl/">http://www.timboelaars.nl/</a>
-* <a href="http://futoryan.prosite.com/">http://futoryan.prosite.com/</a>
-* <a href="http://playonpixels.prosite.com/21591/projects">http://playonpixels.prosite.com/21591/projects</a>
-* <a href="http://colintrenter.prosite.com/">http://colintrenter.prosite.com/</a>
-* <a href="http://calebmorris.prosite.com/">http://calebmorris.prosite.com/</a>
-* <a href="http://www.cullywright.com/">http://www.cullywright.com/</a>
-* <a href="http://yourjustlucky.com/">http://yourjustlucky.com/</a>
-* <a href="http://nicoledominguez.com/portfolio/">http://nicoledominguez.com/portfolio/</a>
-* <a href="http://www.roxannecook.com/">http://www.roxannecook.com/</a>
-* <a href="http://www.84colors.com/portfolio.html">http://www.84colors.com/portfolio.html</a>
+#####*To check resizing pizzas:*
+1. Open `views/pizza.html` in Google Chrome:  
+[http://cskomra.github.io/projects/frontend-nanodegree-mobile-portfolio/views/pizza.html](http://cskomra.github.io/projects/frontend-nanodegree-mobile-portfolio/views/pizza.html "pizza.html")
+2. Open the Console Tab in Developer Tools
+3. Scroll Down to the Pizza Lever Slider on the page
+4. Use the lever to resize pizzas
+5. Check the console for "Time to resize pizzas"
