@@ -11,7 +11,6 @@ var bio = {
 	"welcomeMessage": "Welcome!",
 	"skills": ["Software Development",
 		"Project Management",
-		"Training",
 		"Strategic Planning",
 		"Analysis",
 		"Product Development",
