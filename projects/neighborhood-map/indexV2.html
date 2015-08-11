@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Neighborhood Project</title>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBScrNGYANSOM7AZq8lsQ6SqNiawp7duIU&libraries=places">
+    </script>
+    <style>
+      html, body, #map { height:100%; }
+    </style>
+  </head>
+  <body>
+    <div id="restaurantList" class="box controls">
+      <div class="box-head">
+        <h2 class="left">Restaruants</h2>
+      </div>
+      <div class="box-content">
+        <input type="text" placeholder="Add New Restaurant" data-bind="value: restaurantToAdd, valueUpdate: 'afterkeydown'" />
+        <button data-bind="click: addRestaurant">+ Add</button>
+        <ul data-bind="foreach: restaurants">
+          <li class="restaurantItem">
+            <span data-bind="text: title"></span>
+            <div>
+              <a href="#" class="restaurant-edit">Edit</a>
+              <a href="#" class="restaurant-delete">Delete</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+
+    <div id="map"></div>
+    <script src="js/lib/jquery.js"></script>
+    <script src="js/lib/knockout-3.3.0.js"></script>
+    <script src="js/appV2.js"></script>
+  </body>
+</html>
