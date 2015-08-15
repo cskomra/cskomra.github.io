@@ -1,22 +1,86 @@
 $(function() {
 
+  var map = {};
+
   var data = {
-    map: {},
     mapMarkers: [],
     infowindow: {},
     service: {}
   };
 
+  var views = {
+    //===== VIEW PROPERTIES =====
+    map: document.getElementById('map'),
+
+    //===== VIEW OBJECTS =====
+    mapView: {
+      //init
+      initialize: function() {
+
+        var powell = {lat: 40.1583, lng: -83.0742};
+
+        map = new google.maps.Map(views.map, {
+                center: powell,
+                zoom: 17
+              });
+
+        data.infowindow = new google.maps.InfoWindow();
+
+        data.service = new google.maps.places.PlacesService(map);
+        //service.nearbySearch({
+        data.service.radarSearch({
+          location: powell,
+          radius: 3200,
+          types: ["gas_station", "restaurant", "store"],
+          //rankBy: google.maps.places.RankBy.DISTANCE
+          }, viewModel.callback);
+
+          //render
+      }
+    },
+    placesListView: {
+      //===== VIEW PROPERTIES =====
+      HTMLplacesListStart: '<h2 id="places-heading">Places</h2><ul id="placesList" class="flex-box"></ul>',
+      HTMLplace: '<li class="flex-item"><span class="white-text">%place-name%</span></li>',
+
+      //===== VIEW OBJECTS =====
+      initialize: function(){
+        $('#places').append(this.HTMLplacesListStart);
+        this.render();
+      },
+
+      render: function(){
+        console.log(data.mapMarkers);
+        for (var i = 0; i < data.mapMarkers.length; i++) {
+          var name = marker.name;
+          var formattedPlace = this.HTMLplace.replace("%place-name%", name);
+          placesList.append(formattedPlace);
+        }
+
+
+      }
+
+    }
+  };
+
   var viewModel = {
+
     //data
     mMarkers: ko.observableArray(data.mapMarkers),
 
     //behavior
-
-    getMap: function(){
-      return data.map;
+    initialize: function(){
+      //google.maps.event.addDomListener(window, 'load', views.mapView.initialize);
+      views.mapView.initialize();
+      views.placesListView.initialize();
+      ko.applyBindings(viewModel);
     },
 
+    getMap: function(){
+      return map;
+    },
+
+/*
     initialize: function() {
       var powell = {lat: 40.1583, lng: -83.0742};
 
@@ -37,6 +101,7 @@ $(function() {
         //rankBy: google.maps.places.RankBy.DISTANCE
         }, viewModel.callback);
     },
+    */
 
     callback: function(results, status){
       if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -46,6 +111,9 @@ $(function() {
           //viewModel.getMarkerDetails(results[i])
           //which then calls viewModel.createMarker()
         }
+        //GOT THESE
+        //console.log("after pushing mapMarkers");
+        //console.log(data.mapMarkers);
       }
     },
 
@@ -69,6 +137,7 @@ $(function() {
         position: place.geometry.location
       });
       data.mapMarkers.push(marker);
+      console.log(data.mapMarkers);
 
       google.maps.event.addListener(marker, 'click', function() {
         data.infowindow.setContent(place.name);
@@ -76,7 +145,5 @@ $(function() {
       });
     }
   } // end viewModel
-
-  google.maps.event.addDomListener(window, 'load', viewModel.initialize);
-  ko.applyBindings(viewModel);
+  viewModel.initialize();
 }); // end $(function(){})
