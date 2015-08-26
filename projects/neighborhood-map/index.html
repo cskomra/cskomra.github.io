@@ -1,26 +1,35 @@
 <html>
-  <head>
-    <title>My Neighborhood</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="filter-control"></div>
-    <div id="places"></div>
-    <div id="map"></div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&libraries=places"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
-    <script src="js/app.js"></script>
-  </body>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body>
+	<div id="application" class="row">
+
+		<div id="view-list" class="col-md-4">
+
+			<div id="place-types">
+				<div><input type="checkbox" value="pet_store" data-bind="checked: placeTypes, click: filterMarkers;" />Pet Store</div>
+				<div><input type="checkbox" value="gas_station" data-bind="checked: placeTypes" />Gas Station</div>
+				<div><input type="checkbox" value="restaurant" data-bind="checked: placeTypes" />Restaurant</div>
+			</div>
+
+			<ul id="list" data-bind="foreach: mapMarkers">
+				<li data-bind="text: name"></li>
+			</ul>
+
+		</div>
+
+		<div id="map" class="col-md-8"></div>
+
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBScrNGYANSOM7AZq8lsQ6SqNiawp7duIU&libraries=places"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+	<script defer src="js/app.js"></script>
+</body>
+
 </html>
