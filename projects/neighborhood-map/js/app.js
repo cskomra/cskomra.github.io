@@ -49,11 +49,11 @@ var mapView = {
                 // jsonp: "callback",
                 success: function( response ) {
                     var articleList = response[1];
-                    for (var i = 0; i < 2; i++) {
+                    for (var i = 0; i < 1; i++) {
                         articleStr = articleList[i];
                         if(articleStr){
                             var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-                            content = content + '<a href="' + url + '">' + articleStr + '</a><br>';
+                            content = content + '<a href="' + url + '" target="_blank">' + articleStr + '</a><br>';
                             console.log(content);
                             mapView.infowindow.setContent(filterType + address + content);
                         }else{
