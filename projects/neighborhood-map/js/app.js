@@ -1,5 +1,5 @@
 var data = {
-    mapMarkers: [{name: 'marker1'}, {name:'marker2'}, {name:'marker3'}],
+    mapMarkers: [],
     placeTypes: ['gas_station', 'pet_store']
 };
 
@@ -13,15 +13,58 @@ var mapView = {
 
     createMarker: function(place){
         var placeLoc = place.geometry.location;
+
+        var type = function(place){
+            var types = place.types;  // marker-specific info
+            var typesStr = '';
+            koViewModel.placeTypes().forEach(function(filterEl, index, array){
+                types.forEach(function(placeEl, index, array){
+                    if(filterEl === placeEl){typesStr = typesStr + placeEl.replace("_", " ")}
+                })
+            })
+            return typesStr;
+        };
+
         var marker = new google.maps.Marker({
             map: this.gMap,
             position: place.geometry.location,
             place_id: place.place_id,
-            animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP,
+            title: type(place) + " - " + place.name
         });
+
+
         google.maps.event.addListener(marker, 'click', function() {
-            mapView.infowindow.setContent(place.name);
-            //TODO: setContent (other content for each place)
+            //TODO: add ajax content for each place
+            var name = place.name;
+            console.log(encodeURIComponent(name));
+            var filterType = '<strong>' + name + '</strong>';
+            var address = '<p>' + place.vicinity + '</p>';
+            var content = '';
+            var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
+            encodeURIComponent(name) + '&format=json&callback=wikiCallback';
+            $.ajax(wikiUrl, {
+                //url: wikiUrl,
+                dataType: 'jsonp',
+                // jsonp: "callback",
+                success: function( response ) {
+                    var articleList = response[1];
+                    for (var i = 0; i < 2; i++) {
+                        articleStr = articleList[i];
+                        if(articleStr){
+                            var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+                            content = content + '<a href="' + url + '">' + articleStr + '</a><br>';
+                            console.log(content);
+                            mapView.infowindow.setContent(filterType + address + content);
+                        }else{
+                            mapView.infowindow.setContent(filterType + address + '<p>(wiki article unavailable)</p>');
+                        }
+                    }
+                },
+                error: function() {
+                    mapView.infowindow.setContent(filterType + address + '<p>(wiki article unavailable)</p>');
+                }
+            });
             mapView.infowindow.open(mapView.gMap, this);
             });
     },
