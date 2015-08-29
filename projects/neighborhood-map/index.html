@@ -3,10 +3,25 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 
 <body>
+
+	<!--start navbar-->
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="navbar-header">
+			<a href="#" class="navbar-brand">Neighborhood</a>
+		</div>
+		<div>
+			<ul class="nav navbar-nav" id="list" data-bind="foreach: mapMarkers">
+				<li><a href='#' data-bind="text: name"></a></li>
+		</ul>
+		</div>
+
+
+	</nav>
+	<!--end navbar -->
 	<div id="application" class="row">
 
 		<div id="view-list" class="col-md-4">
@@ -17,14 +32,17 @@
 				<div><input type="checkbox" value="restaurant" data-bind="checked: placeTypes" />Restaurant</div>
 			</div>
 
+			<!--moved to test
 			<ul id="list" data-bind="foreach: mapMarkers">
 				<li data-bind="text: name"></li>
 			</ul>
+			-->
 		</div>
 
 		<div id="map" class="col-md-8"></div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBScrNGYANSOM7AZq8lsQ6SqNiawp7duIU&libraries=places"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
 	<script defer src="js/app.js"></script>
