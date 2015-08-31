@@ -5,18 +5,14 @@ body {
     padding: 0;
 }
 
-/*nav bar*/
-
-
 /*List View*/
 ul {
-    font-size: 16px;
+    font-size: 14px;
     background: white;
 }
 li:hover {
-    background-color: #FFD699;
+    background-color: #E5E5E5;
 }
-
 
 /*Map View*/
 #map {

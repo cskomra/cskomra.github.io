@@ -86,12 +86,13 @@ var mapView = {
                     }
                 }
             }
-        );
-    },
+        )
+    }
 };
 var koViewModel = {
     mapMarkers: ko.observableArray(data.mapMarkers),
     placeTypes: ko.observableArray(data.placeTypes),
+    //call this on click of submit button, pass in search field value latlng
     mapView: mapView.searchNearby(),
     filterMarkers: function(){
         console.log('filtering');
