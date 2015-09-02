@@ -5,7 +5,11 @@ body {
     padding: 0;
 }
 
-/*List View*/
+/*nav*/
+nav.navbar.navbar-default {
+    margin-bottom: 0;
+}
+
 ul {
     font-size: 14px;
     background: white;
@@ -13,21 +17,13 @@ ul {
 li:hover {
     background-color: #E5E5E5;
 }
+#search-input {
+    width: auto;
+    vertical-align: middle;
+}
 
-/*Map View*/
+/*map*/
 #map {
     height: 100%;
     position: fixed;
-    z-index: 0;
 }
-
-#place-search {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    height: 40px;
-    width: 200px;
-    font-size: 20px;
-    z-index: 3;
-}
-
