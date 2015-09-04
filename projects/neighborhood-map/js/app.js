@@ -13,9 +13,9 @@ var mapView = {
     createMarker: function(place){
         var placeLoc = place.geometry.location;
 
-        //return place types that matched selected filters
+        //return the place's selected filter types as string
         var type = function(place){
-            var types = place.types;  // marker-specific info
+            var types = place.types;  // marker-specific types
             var typesStr = '';
             koViewModel.placeTypes().forEach(function(filterElement, index, array){
                 types.forEach(function(placeElement, index, array){
@@ -25,16 +25,16 @@ var mapView = {
             return typesStr;
         };
 
-        //create a marker for the place
+        //create marker
         var marker = new google.maps.Marker({
             map: this.gMap,
             position: placeLoc,
             place_id: place.place_id,
             animation: google.maps.Animation.DROP,
             name: place.name,
-            title: place.name + '\n' + type(place)
+            title: place.name + '\n' + type(place)  //UI - expose types
         });
-        //TODO: add marker to koViewModel.mapMarkers
+        //add marker to koViewModel.mapMarkers
         koViewModel.mapMarkers.push(marker);
 
         //add click listener to marker
@@ -99,16 +99,11 @@ var mapView = {
 
         searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
-            //input.value = "";
 
             if (places.length == 0) {
                 return;
             };
 
-
-
-            //TODO:  reset existing markers to null.  verify if using...
-            //TODO:  see if can NOT use data.mapMarkers as orig markers on map
             console.log('data.mapMarkers.length = ' + data.mapMarkers.length);
             for( var i = 0; i < data.mapMarkers.length; i++) {
                 data.mapMarkers[i].setMap(null);
@@ -118,9 +113,6 @@ var mapView = {
             for( var i = 0; i < koViewModel.mapMarkers().length; i++) {
                 koViewModel.mapMarkers()[i].setMap(null);
             };
-
-
-
 
             koViewModel.mapMarkers([]);
 
@@ -150,6 +142,7 @@ var mapView = {
             console.log('after fitBounds...');
             console.log('data.mapMarkers.length = ' + data.mapMarkers.length);
             console.log('koViewModel.mapMarkers.length = ' + koViewModel.mapMarkers().length);
+            input.value = "";
         })
     }
 };
