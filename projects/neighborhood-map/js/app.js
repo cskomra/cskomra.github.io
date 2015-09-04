@@ -31,7 +31,8 @@ var mapView = {
             position: placeLoc,
             place_id: place.place_id,
             animation: google.maps.Animation.DROP,
-            title: type(place) + " - " + place.name
+            name: place.name,
+            title: place.name + '\n' + '(' + type(place) + ')'
         });
 
         //add click listener to marker
@@ -125,6 +126,7 @@ var mapView = {
             console.log(koViewModel.mapMarkers());
 
             var bounds = new google.maps.LatLngBounds();
+            //use create marker for each place ??
             places.forEach(function(place) {
                 var icon = {
                     url: place.icon,
