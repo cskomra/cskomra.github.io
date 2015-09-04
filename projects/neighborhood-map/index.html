@@ -33,10 +33,12 @@
 							<li><input type="checkbox" value="restaurant" data-bind="checked: $root.placeTypes, click: $root.filterMarkers" />Restaurant</li>
 						</ul>
 					</li>
-				</ul>
-				<!--Default Search Results Set-->
-				<ul class="nav navbar-nav" id="list" data-bind="foreach: mapMarkers">
-					<li><a href="#" data-bind="text: name"></a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Places<span class="caret"></span></a>
+						<ul class="dropdown-menu" data-bind="foreach: mapMarkers">
+							<li><a href="#" data-bind="text: name"></a></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</div>
