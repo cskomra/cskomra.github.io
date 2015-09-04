@@ -17,9 +17,9 @@ var mapView = {
         var type = function(place){
             var types = place.types;  // marker-specific info
             var typesStr = '';
-            koViewModel.placeTypes().forEach(function(filterEl, index, array){
-                types.forEach(function(placeEl, index, array){
-                    if(filterEl === placeEl){typesStr = typesStr + placeEl.replace("_", " ")}
+            koViewModel.placeTypes().forEach(function(filterElement, index, array){
+                types.forEach(function(placeElement, index, array){
+                    if(filterElement === placeElement){typesStr = typesStr + placeElement.replace("_", " ")}
                 })
             })
             return typesStr;
@@ -32,14 +32,15 @@ var mapView = {
             place_id: place.place_id,
             animation: google.maps.Animation.DROP,
             name: place.name,
-            title: place.name + '\n' + '(' + type(place) + ')'
+            title: place.name + '\n' + type(place)
         });
+        //TODO: add marker to koViewModel.mapMarkers
+        koViewModel.mapMarkers.push(marker);
 
         //add click listener to marker
         google.maps.event.addListener(marker, 'click', function() {
             //TODO: clarify the wiki link for user
             var name = place.name;
-            console.log(encodeURIComponent(name));
             var filterType = '<strong>' + name + '</strong>';
             var address = '<p>' + place.vicinity + '</p>';
             var content = '';
@@ -56,7 +57,6 @@ var mapView = {
                         if(articleStr){
                             var url = 'http://en.wikipedia.org/wiki/' + articleStr;
                             content = content + '<a href="' + url + '" target="_blank">' + articleStr + '</a><br>';
-                            console.log(content);
                             mapView.infowindow.setContent(filterType + address + content);
                         }else{
                             mapView.infowindow.setContent(filterType + address + '<p>(wiki article unavailable)</p>');
@@ -83,13 +83,8 @@ var mapView = {
             function(results, status){
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     for (var i = 0; i < results.length; i++) {
-                        koViewModel.mapMarkers.push(mapView.createMarker(results[i]));
-                        //koViewModel.mapMarkers.push(results[i]);
-                        //console.log(results[i]);
+                        mapView.createMarker(results[i]);
                     };
-                    //make sure *markers* array created in mapMarkers()
-                    //these are markers in the koViewModel.mapMarkers() array:
-                    //console.log(koViewModel.mapMarkers());
                 }
             }
         )
@@ -104,30 +99,35 @@ var mapView = {
 
         searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
+            //input.value = "";
 
             if (places.length == 0) {
                 return;
-            }
+            };
 
-            //clear out the old markers
-            //console.log("clearing...");
-            //console.log(koViewModel.mapMarkers());
 
-            console.log('entering for loop');
-            console.log(data.mapMarkers);
+
+            //TODO:  reset existing markers to null.  verify if using...
+            //TODO:  see if can NOT use data.mapMarkers as orig markers on map
+            console.log('data.mapMarkers.length = ' + data.mapMarkers.length);
             for( var i = 0; i < data.mapMarkers.length; i++) {
-                console.log(data.mapMarkers[i]);
-                data.mapMarkers[i].getPosition();
-            }
+                data.mapMarkers[i].setMap(null);
+            };
+
+            console.log('koViewModel.mapMarkers.length = ' + koViewModel.mapMarkers().length);
+            for( var i = 0; i < koViewModel.mapMarkers().length; i++) {
+                koViewModel.mapMarkers()[i].setMap(null);
+            };
+
+
 
 
             koViewModel.mapMarkers([]);
-            console.log("cleared?");
-            console.log(koViewModel.mapMarkers());
 
             var bounds = new google.maps.LatLngBounds();
-            //use create marker for each place ??
             places.forEach(function(place) {
+
+                // TODO:  This icon not being used - Remove.
                 var icon = {
                     url: place.icon,
                     size: new google.maps.Size(71, 71),
@@ -136,13 +136,8 @@ var mapView = {
                     scaledSize: new google.maps.Size(25, 25)
                 };
 
-                //Create a marker for each place.
-                koViewModel.mapMarkers().push(new google.maps.Marker( {
-                    map: mapView.gMap,
-                    //icon: icon,
-                    title: place.name,
-                    position: place.geometry.location
-                }));
+                //This adds marker to map and to mapMarkers()
+                mapView.createMarker(place);
 
                 if (place.geometry.viewport) {
                     // Only geocodes have viewport.
@@ -152,13 +147,16 @@ var mapView = {
                 }
             });
             mapView.gMap.fitBounds(bounds);
+            console.log('after fitBounds...');
+            console.log('data.mapMarkers.length = ' + data.mapMarkers.length);
+            console.log('koViewModel.mapMarkers.length = ' + koViewModel.mapMarkers().length);
         })
     }
 };
 var koViewModel = {
     mapMarkers: ko.observableArray(data.mapMarkers),
     placeTypes: ko.observableArray(data.placeTypes),
-    searches: [ mapView.searchNearby(), mapView.initSearchPlaces()],
+    searches: [mapView.searchNearby(), mapView.initSearchPlaces()],
     filterMarkers: function(){
         console.log('filtering');
         //set mapMarkers() based on types checked
