@@ -1,6 +1,6 @@
 var data = {
     mapMarkers: [],
-    placeTypes: ['gas_station', 'pet_store']
+    placeTypes: []
 };
 
 var mapView = {
@@ -10,7 +10,17 @@ var mapView = {
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow(),
+    getUnique: function(inputArray){
+        var outputArray = [];
+        for( var i = 0; i < inputArray.length; i++ ) {
+            if (jQuery.inArray(inputArray[i], outputArray) == -1){
+                outputArray.push(inputArray[i]);
+            }
+        }
+        return outputArray;
+    },
     createMarker: function(place){
+        console.log(place);
         var placeLoc = place.geometry.location;
 
         //return the place's selected filter types as string
@@ -74,6 +84,7 @@ var mapView = {
     searchNearby: function(){
         var loc = {lat: 40.1583, lng: -83.0742};
         var service = new google.maps.places.PlacesService(mapView.gMap);
+
         var requestObj = {
             location: loc,
             radius: 2000,
@@ -115,8 +126,10 @@ var mapView = {
             };
 
             koViewModel.mapMarkers([]);
+            koViewModel.placeTypes([]);
 
             var bounds = new google.maps.LatLngBounds();
+
             places.forEach(function(place) {
 
                 // TODO:  This icon not being used - Remove.
@@ -126,6 +139,10 @@ var mapView = {
                     origin: new google.maps.Point(0, 0),
                     anchor: new google.maps.Point(17, 34),
                     scaledSize: new google.maps.Size(25, 25)
+                };
+
+                for( i = 0; i < place.types.length; i++ ){
+                    koViewModel.placeTypes.push(place.types[i]);
                 };
 
                 //This adds marker to map and to mapMarkers()
@@ -138,6 +155,7 @@ var mapView = {
                     bounds.extend(place.geometry.location);
                 }
             });
+            koViewModel.placeTypes(mapView.getUnique(koViewModel.placeTypes()));
             mapView.gMap.fitBounds(bounds);
             console.log('after fitBounds...');
             console.log('data.mapMarkers.length = ' + data.mapMarkers.length);
@@ -149,7 +167,8 @@ var mapView = {
 var koViewModel = {
     mapMarkers: ko.observableArray(data.mapMarkers),
     placeTypes: ko.observableArray(data.placeTypes),
-    searches: [mapView.searchNearby(), mapView.initSearchPlaces()],
+    searches: [mapView.initSearchPlaces()],
+    //searches: [mapView.searchNearby(), mapView.initSearchPlaces()],
     filterMarkers: function(){
         console.log('filtering');
         //set mapMarkers() based on types checked
