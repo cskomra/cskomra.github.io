@@ -82,7 +82,15 @@ var mapView = {
         return marker;
     },
     filterMarkers: function(){
-        alert('filtering');
+        console.log($(event.target));
+        if ($(event.target).checked) {
+            //uncheck -> remove from placeTypes()
+            alert('checked');
+        }else{
+            alert('not checked');
+            //add to placeTypes()
+            console.log(koViewModel.placeTypes());
+        }
         //set mapMarkers() based on types checked
     },
     searchNearby: function(){
@@ -110,6 +118,17 @@ var mapView = {
 
         mapView.gMap.addListener('bounds_changed', function(){
             searchBox.setBounds(mapView.gMap.getBounds());
+        });
+
+        $('input[type=checkbox]').change(function(){
+            if( this.checked ){
+                console.log(this.value);
+                alert('checked')
+                console.log(koViewModel.placeTypes());
+            }else{
+                alert('not checked')
+                console.log(koViewModel.placeTypes());
+            }
         });
 
         searchBox.addListener('places_changed', function() {
