@@ -14,9 +14,21 @@ ul {
     font-size: 14px;
     background: white;
 }
+
+.typeLabel{
+    padding: 5px;
+    font-size: 16px;
+}
+
+input[type=checkbox] {
+    width: 25px;
+    height: 25px;
+}
+
 li:hover {
     background-color: #E5E5E5;
 }
+
 #search-input {
     width: auto;
     vertical-align: middle;

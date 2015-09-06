@@ -81,6 +81,10 @@ var mapView = {
         });
         return marker;
     },
+    filterMarkers: function(){
+        alert('filtering');
+        //set mapMarkers() based on types checked
+    },
     searchNearby: function(){
         var loc = {lat: 40.1583, lng: -83.0742};
         var service = new google.maps.places.PlacesService(mapView.gMap);
@@ -169,10 +173,6 @@ var koViewModel = {
     placeTypes: ko.observableArray(data.placeTypes),
     searches: [mapView.initSearchPlaces()],
     //searches: [mapView.searchNearby(), mapView.initSearchPlaces()],
-    filterMarkers: function(){
-        console.log('filtering');
-        //set mapMarkers() based on types checked
-    }
 };
 
 ko.applyBindings(koViewModel);
