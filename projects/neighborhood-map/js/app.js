@@ -81,18 +81,6 @@ var mapView = {
         });
         return marker;
     },
-    filterMarkers: function(){
-        console.log($(event.target));
-        if ($(event.target).checked) {
-            //uncheck -> remove from placeTypes()
-            alert('checked');
-        }else{
-            alert('not checked');
-            //add to placeTypes()
-            console.log(koViewModel.placeTypes());
-        }
-        //set mapMarkers() based on types checked
-    },
     searchNearby: function(){
         var loc = {lat: 40.1583, lng: -83.0742};
         var service = new google.maps.places.PlacesService(mapView.gMap);
@@ -120,6 +108,7 @@ var mapView = {
             searchBox.setBounds(mapView.gMap.getBounds());
         });
 
+
         $('input[type=checkbox]').change(function(){
             if( this.checked ){
                 console.log(this.value);
@@ -130,6 +119,7 @@ var mapView = {
                 console.log(koViewModel.placeTypes());
             }
         });
+
 
         searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
@@ -179,10 +169,9 @@ var mapView = {
                 }
             });
             koViewModel.placeTypes(mapView.getUnique(koViewModel.placeTypes()));
+
+            console.log(koViewModel.placeTypes());
             mapView.gMap.fitBounds(bounds);
-            console.log('after fitBounds...');
-            console.log('data.mapMarkers.length = ' + data.mapMarkers.length);
-            console.log('koViewModel.mapMarkers.length = ' + koViewModel.mapMarkers().length);
             input.value = "";
         })
     }
