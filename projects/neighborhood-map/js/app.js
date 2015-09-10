@@ -10,6 +10,12 @@ var mapView = {
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow(),
+    displayThisType: function(){
+        //this returns an object of true/false values
+        // visible will check the correct index using $index to get true/false value
+        //see if I can pass $index
+        console.log(this);
+    },
     getUnique: function(inputArray){
         var outputArray = [];
         for( var i = 0; i < inputArray.length; i++ ) {
