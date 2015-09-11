@@ -20,20 +20,8 @@ var mapView = {
         return outputArray;
     },
     createMarker: function(place){
-        console.log(place);
+        //console.log(place);
         var placeLoc = place.geometry.location;
-
-        //return the place's selected filter types as string
-        var type = function(place){
-            var types = place.types;  // marker-specific types
-            var typesStr = '';
-            koViewModel.placeTypes().forEach(function(filterElement, index, array){
-                types.forEach(function(placeElement, index, array){
-                    if(filterElement === placeElement){typesStr = typesStr + placeElement.replace("_", " ")}
-                })
-            })
-            return typesStr;
-        };
 
         //create marker
         var marker = new google.maps.Marker({
@@ -43,7 +31,7 @@ var mapView = {
             animation: google.maps.Animation.DROP,
             name: place.name,
             types: place.types,
-            title: place.name + '\n' + type(place)  //UI - expose types
+            title: place.name
         });
         //add marker to koViewModel.mapMarkers
         koViewModel.mapMarkers.push(marker);
@@ -53,7 +41,8 @@ var mapView = {
             //TODO: clarify the wiki link for user
             var name = place.name;
             var filterType = '<strong>' + name + '</strong>';
-            var address = '<p>' + place.vicinity + '</p>';
+            console.log(place.formatted_address);
+            var address = '<p>' + place.formatted_address + '</p>';
             var content = '';
             var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
             encodeURIComponent(name) + '&format=json&callback=wikiCallback';
@@ -67,7 +56,7 @@ var mapView = {
                         articleStr = articleList[i];
                         if(articleStr){
                             var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-                            content = content + '<a href="' + url + '" target="_blank">' + articleStr + '</a><br>';
+                            content = content + '<a href="' + url + '" target="_blank">' + articleStr + '</a><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span><br>';
                             mapView.infowindow.setContent(filterType + address + content);
                         }else{
                             mapView.infowindow.setContent(filterType + address + '<p>(wiki article unavailable)</p>');
@@ -113,33 +102,37 @@ var mapView = {
         $('input[type=checkbox]').change(function(){
             var type = this.value;
             var markers = koViewModel.mapMarkers();
-            if( this.checked ){
-                console.log(type);
-                alert('checked');
-                console.log(koViewModel.placeTypes());
-            }else{
+            if( !this.checked ){
                 //this is the one using
                 for (var i = 0; i < markers.length; i++){
-                    console.log("new marker:");
-                    console.log(markers[i]);
+                    //console.log("new marker:");
+                    //console.log(markers[i]);
                     if( markers[i].types.indexOf(type) != -1){
-                        console.log(markers[i]);
-                        console.log("This marker has the type " + type + ": ");
-                        console.log(markers[i].types);
+                        //console.log(markers[i]);
+                        //console.log("Marker, " + markers[i].name + " has the type " + type + ": ");
+                        //console.log(markers[i].types);
                         var idx = markers[i].types.indexOf(type);
-                        console.log(type + " is at location: " + idx);
-                        console.log("Removing '" + type + "' from types...");
+                        //console.log(type + " is at location: " + idx);
+                        //console.log("Removing '" + type + "' from types...");
                         var removeThis = markers[i].types.splice(idx, idx + 1);
-                        console.log("The marker's new types are:");
-                        console.log(markers[i].types);
-                        console.log("Checking...is types now empty:");
+                        //console.log("The marker's new types are:");
+                        //console.log(markers[i].types);
+                        //console.log("Checking...is types now empty:");
                         if (markers[i].types.length == 0){
-                            console.log("Types array is empty.  Setting map to null...");
+                            //console.log("Types array is empty.  Setting map to null...");
                             markers[i].setMap(null);
-                            console.log("Marker has been removed.");
+                            //console.log("Marker's map is null.");
                         }else{
-                            console.log("Marker still has other types.");
-                        }
+                            //console.log("Marker still has other types.");
+                        };
+                        if( markers[i].map == null){
+                            //console.log("Removing marker from mapMarkers...");
+                            var mkrIdx = markers.indexOf(markers[i]);
+                            //console.log(mkrIdx);
+                            var removeThis = markers.splice(mkrIdx, mkrIdx + 1);
+                            //console.log("Marker has been removed from mapMarkers.");
+                            //console.log(markers);
+                        };
                     }
                 }
             }
@@ -153,12 +146,12 @@ var mapView = {
                 return;
             };
 
-            console.log('data.mapMarkers.length = ' + data.mapMarkers.length);
+            //console.log('data.mapMarkers.length = ' + data.mapMarkers.length);
             for( var i = 0; i < data.mapMarkers.length; i++) {
                 data.mapMarkers[i].setMap(null);
             };
 
-            console.log('koViewModel.mapMarkers.length = ' + koViewModel.mapMarkers().length);
+            //console.log('koViewModel.mapMarkers.length = ' + koViewModel.mapMarkers().length);
             for( var i = 0; i < koViewModel.mapMarkers().length; i++) {
                 koViewModel.mapMarkers()[i].setMap(null);
             };
@@ -195,7 +188,6 @@ var mapView = {
             });
             koViewModel.placeTypes(mapView.getUnique(koViewModel.placeTypes()));
 
-            console.log(koViewModel.placeTypes());
             mapView.gMap.fitBounds(bounds);
             input.value = "";
         })
