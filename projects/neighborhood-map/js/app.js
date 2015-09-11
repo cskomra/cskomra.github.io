@@ -10,12 +10,6 @@ var mapView = {
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow(),
-    displayThisType: function(){
-        //this returns an object of true/false values
-        // visible will check the correct index using $index to get true/false value
-        //see if I can pass $index
-        console.log(this);
-    },
     getUnique: function(inputArray){
         var outputArray = [];
         for( var i = 0; i < inputArray.length; i++ ) {
@@ -48,6 +42,7 @@ var mapView = {
             place_id: place.place_id,
             animation: google.maps.Animation.DROP,
             name: place.name,
+            types: place.types,
             title: place.name + '\n' + type(place)  //UI - expose types
         });
         //add marker to koViewModel.mapMarkers
@@ -116,13 +111,37 @@ var mapView = {
 
 
         $('input[type=checkbox]').change(function(){
+            var type = this.value;
+            var markers = koViewModel.mapMarkers();
             if( this.checked ){
-                console.log(this.value);
-                alert('checked')
+                console.log(type);
+                alert('checked');
                 console.log(koViewModel.placeTypes());
             }else{
-                alert('not checked')
-                console.log(koViewModel.placeTypes());
+                //this is the one using
+                for (var i = 0; i < markers.length; i++){
+                    console.log("new marker:");
+                    console.log(markers[i]);
+                    if( markers[i].types.indexOf(type) != -1){
+                        console.log(markers[i]);
+                        console.log("This marker has the type " + type + ": ");
+                        console.log(markers[i].types);
+                        var idx = markers[i].types.indexOf(type);
+                        console.log(type + " is at location: " + idx);
+                        console.log("Removing '" + type + "' from types...");
+                        var removeThis = markers[i].types.splice(idx, idx + 1);
+                        console.log("The marker's new types are:");
+                        console.log(markers[i].types);
+                        console.log("Checking...is types now empty:");
+                        if (markers[i].types.length == 0){
+                            console.log("Types array is empty.  Setting map to null...");
+                            markers[i].setMap(null);
+                            console.log("Marker has been removed.");
+                        }else{
+                            console.log("Marker still has other types.");
+                        }
+                    }
+                }
             }
         });
 
