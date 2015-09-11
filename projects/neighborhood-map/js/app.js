@@ -9,7 +9,7 @@ var mapView = {
         center: {lat: 40.1583, lng: -83.0742},
         zoom: 13
         }),
-    infowindow: new google.maps.InfoWindow(),
+    infowindow: new google.maps.InfoWindow({maxWidth: 300}),
     getUnique: function(inputArray){
         var outputArray = [];
         for( var i = 0; i < inputArray.length; i++ ) {
@@ -39,32 +39,29 @@ var mapView = {
         //add click listener to marker
         google.maps.event.addListener(marker, 'click', function() {
             //TODO: clarify the wiki link for user
-            var name = place.name;
-            var filterType = '<strong>' + name + '</strong>';
-            console.log(place.formatted_address);
-            var address = '<p>' + place.formatted_address + '</p>';
+            //var name = place.name;
+            var name = '<strong>' + place.name + '</strong>';
+            var address = '<p>' + place.formatted_address.split(",")[0] + '</p>';
             var content = '';
             var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
-            encodeURIComponent(name) + '&format=json&callback=wikiCallback';
+            encodeURIComponent(place.name) + '&format=json&callback=wikiCallback';
             $.ajax(wikiUrl, {
-                //url: wikiUrl,
                 dataType: 'jsonp',
-                // jsonp: "callback",
                 success: function( response ) {
                     var articleList = response[1];
                     for (var i = 0; i < 1; i++) {
                         articleStr = articleList[i];
                         if(articleStr){
                             var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-                            content = content + '<a href="' + url + '" target="_blank">' + articleStr + '</a><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span><br>';
-                            mapView.infowindow.setContent(filterType + address + content);
+                            content = '<p><a href="' + url + '" target="_blank">' + articleStr + '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
+                            mapView.infowindow.setContent(name + address + content);
                         }else{
-                            mapView.infowindow.setContent(filterType + address + '<p>(wiki article unavailable)</p>');
+                            mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
                         }
                     }
                 },
                 error: function() {
-                    mapView.infowindow.setContent(filterType + address + '<p>(wiki article unavailable)</p>');
+                    mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
                 }
             });
             mapView.infowindow.open(mapView.gMap, this);
