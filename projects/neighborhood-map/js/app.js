@@ -1,6 +1,6 @@
 var data = {
     mapMarkers: [],
-    placeTypes: []
+    placeTypes: [],
 };
 
 var mapView = {
@@ -27,7 +27,8 @@ var mapView = {
         var marker = new google.maps.Marker({
             map: this.gMap,
             position: placeLoc,
-            place_id: place.place_id,
+            placeId: place.place_id,
+            //itemDisplayName: place.name + '  [' + place.place_id + ']',
             animation: google.maps.Animation.DROP,
             name: place.name,
             types: place.types,
@@ -99,6 +100,8 @@ var mapView = {
         $('input[type=checkbox]').change(function(){
             var type = this.value;
             var markers = koViewModel.mapMarkers();
+            var placeItems = $('ul.places').children();
+            //console.log(placeItems);
             if( !this.checked ){
                 //this is the one using
                 for (var i = 0; i < markers.length; i++){
@@ -118,23 +121,16 @@ var mapView = {
                         if (markers[i].types.length == 0){
                             //console.log("Types array is empty.  Setting map to null...");
                             markers[i].setMap(null);
-                            //console.log("Marker's map is null.");
-                        }else{
-                            //console.log("Marker still has other types.");
-                        };
-                        if( markers[i].map == null){
-                            //console.log("Removing marker from mapMarkers...");
-                            var mkrIdx = markers.indexOf(markers[i]);
-                            //console.log(mkrIdx);
-                            var removeThis = markers.splice(mkrIdx, mkrIdx + 1);
-                            //console.log("Marker has been removed from mapMarkers.");
-                            //console.log(markers);
-                        };
+                            console.log("Find match for:  " + markers[i].name);
+                            console.log("The Id = " + markers[i].placeId);
+                            var li = document.getElementById(markers[i].placeId);
+                            console.log(li);
+                            li.style.display = "none";
+                        }
                     }
                 }
             }
         });
-
 
         searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
@@ -187,13 +183,14 @@ var mapView = {
 
             mapView.gMap.fitBounds(bounds);
             input.value = "";
-        })
+        });
     }
 };
 var koViewModel = {
     mapMarkers: ko.observableArray(data.mapMarkers),
     placeTypes: ko.observableArray(data.placeTypes),
     searches: [mapView.initSearchPlaces()],
+    shouldShowItem: ko.observable(true)
     //searches: [mapView.searchNearby(), mapView.initSearchPlaces()],
 };
 
