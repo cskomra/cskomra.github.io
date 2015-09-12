@@ -19,6 +19,13 @@ var mapView = {
         }
         return outputArray;
     },
+    placeItemClicked: function(){
+        console.log(this);
+        var name = '<strong>' + this.name + '</strong>';
+        mapView.infowindow.setContent(name);
+        mapView.gMap.setCenter(this.position);
+        mapView.infowindow.open(mapView.gMap, this);
+    },
     createMarker: function(place){
         //console.log(place);
         var placeLoc = place.geometry.location;
@@ -39,34 +46,38 @@ var mapView = {
 
         //add click listener to marker
         google.maps.event.addListener(marker, 'click', function() {
-            //TODO: clarify the wiki link for user
-            //var name = place.name;
-            var name = '<strong>' + place.name + '</strong>';
-            var address = '<p>' + place.formatted_address.split(",")[0] + '</p>';
-            var content = '';
-            var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
-            encodeURIComponent(place.name) + '&format=json&callback=wikiCallback';
-            $.ajax(wikiUrl, {
-                dataType: 'jsonp',
-                success: function( response ) {
-                    var articleList = response[1];
-                    for (var i = 0; i < 1; i++) {
-                        articleStr = articleList[i];
-                        if(articleStr){
-                            var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-                            content = '<p><a href="' + url + '" target="_blank">' + articleStr + '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
-                            mapView.infowindow.setContent(name + address + content);
-                        }else{
-                            mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
-                        }
+        var name = '<strong>' + place.name + '</strong>';
+        var address = '<p>' + place.formatted_address.split(",")[0] + '</p>';
+        var content = '';
+        var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
+        encodeURIComponent(place.name) + '&format=json&callback=wikiCallback';
+        $.ajax(wikiUrl, {
+            dataType: 'jsonp',
+            success: function( response ) {
+                var articleList = response[1];
+                for (var i = 0; i < 1; i++) {
+                    articleStr = articleList[i];
+                    if(articleStr){
+                        var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+                        content = '<p><a href="' + url + '" target="_blank">' + articleStr + '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
+                        mapView.infowindow.setContent(name + address + content);
+                    }else{
+                        mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
                     }
-                },
-                error: function() {
-                    mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
                 }
-            });
-            mapView.infowindow.open(mapView.gMap, this);
+            },
+            error: function() {
+                mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
+            }
         });
+        mapView.infowindow.open(mapView.gMap, this);
+        if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
+            mapView.infowindow.close();
+        } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+    });
         return marker;
     },
     searchNearby: function(){
