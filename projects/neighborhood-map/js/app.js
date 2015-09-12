@@ -5,7 +5,6 @@ var data = {
 
 var mapView = {
     gMap: new google.maps.Map(document.getElementById('map'), {
-        //center: self.locationData()[0].latLng,
         center: {lat: 40.1583, lng: -83.0742},
         zoom: 13
         }),
@@ -46,58 +45,39 @@ var mapView = {
 
         //add click listener to marker
         google.maps.event.addListener(marker, 'click', function() {
-        var name = '<strong>' + place.name + '</strong>';
-        var address = '<p>' + place.formatted_address.split(",")[0] + '</p>';
-        var content = '';
-        var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
-        encodeURIComponent(place.name) + '&format=json&callback=wikiCallback';
-        $.ajax(wikiUrl, {
-            dataType: 'jsonp',
-            success: function( response ) {
-                var articleList = response[1];
-                for (var i = 0; i < 1; i++) {
-                    articleStr = articleList[i];
-                    if(articleStr){
-                        var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-                        content = '<p><a href="' + url + '" target="_blank">' + articleStr + '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
-                        mapView.infowindow.setContent(name + address + content);
-                    }else{
-                        mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
+            var name = '<strong>' + place.name + '</strong>';
+            var address = '<p>' + place.formatted_address.split(",")[0] + '</p>';
+            var content = '';
+            var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
+            encodeURIComponent(place.name) + '&format=json&callback=wikiCallback';
+            $.ajax(wikiUrl, {
+                dataType: 'jsonp',
+                success: function( response ) {
+                    var articleList = response[1];
+                    for (var i = 0; i < 1; i++) {
+                        articleStr = articleList[i];
+                        if(articleStr){
+                            var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+                            content = '<p><a href="' + url + '" target="_blank">' + articleStr + '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
+                            mapView.infowindow.setContent(name + address + content);
+                        }else{
+                            mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
+                        }
                     }
+                },
+                error: function() {
+                    mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
                 }
-            },
-            error: function() {
-                mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
+            });
+            mapView.infowindow.open(mapView.gMap, this);
+            if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+                mapView.infowindow.close();
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
             }
         });
-        mapView.infowindow.open(mapView.gMap, this);
-        if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-            mapView.infowindow.close();
-        } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
-    });
         return marker;
-    },
-    searchNearby: function(){
-        var loc = {lat: 40.1583, lng: -83.0742};
-        var service = new google.maps.places.PlacesService(mapView.gMap);
-
-        var requestObj = {
-            location: loc,
-            radius: 2000,
-            types: data.placeTypes
-        };
-        service.nearbySearch(requestObj,
-            function(results, status){
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    for (var i = 0; i < results.length; i++) {
-                        mapView.createMarker(results[i]);
-                    };
-                }
-            }
-        )
     },
     initSearchPlaces: function() {
         var input = document.getElementById('search-input');
@@ -166,16 +146,6 @@ var mapView = {
             var bounds = new google.maps.LatLngBounds();
 
             places.forEach(function(place) {
-
-                // TODO:  This icon not being used - Remove.
-                var icon = {
-                    url: place.icon,
-                    size: new google.maps.Size(71, 71),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(17, 34),
-                    scaledSize: new google.maps.Size(25, 25)
-                };
-
                 for( i = 0; i < place.types.length; i++ ){
                     koViewModel.placeTypes.push(place.types[i]);
                 };
@@ -194,7 +164,7 @@ var mapView = {
 
             mapView.gMap.fitBounds(bounds);
             input.value = "";
-        });
+        })
     }
 };
 var koViewModel = {
@@ -202,7 +172,6 @@ var koViewModel = {
     placeTypes: ko.observableArray(data.placeTypes),
     searches: [mapView.initSearchPlaces()],
     shouldShowItem: ko.observable(true)
-    //searches: [mapView.searchNearby(), mapView.initSearchPlaces()],
 };
 
 ko.applyBindings(koViewModel);
