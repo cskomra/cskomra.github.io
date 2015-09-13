@@ -5,27 +5,28 @@ var data = {
 
 var mapView = {
     gMap: new google.maps.Map(document.getElementById('map'), {
+        //TODO: accept user-defined center location
         center: {lat: 40.1583, lng: -83.0742},
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
-    getUnique: function(inputArray){
+    getUnique: function(inputArray) {
         var outputArray = [];
-        for( var i = 0; i < inputArray.length; i++ ) {
-            if (jQuery.inArray(inputArray[i], outputArray) == -1){
+        for (var i = 0; i < inputArray.length; i++) {
+            if (jQuery.inArray(inputArray[i], outputArray) == -1) {
                 outputArray.push(inputArray[i]);
             }
         }
         return outputArray;
     },
-    placeItemClicked: function(){
+    placeItemClicked: function() {
         console.log(this);
         var name = '<strong>' + this.name + '</strong>';
         mapView.infowindow.setContent(name);
         mapView.gMap.setCenter(this.position);
         mapView.infowindow.open(mapView.gMap, this);
     },
-    createMarker: function(place){
+    createMarker: function(place) {
         //console.log(place);
         var placeLoc = place.geometry.location;
 
@@ -56,11 +57,12 @@ var mapView = {
                     var articleList = response[1];
                     for (var i = 0; i < 1; i++) {
                         articleStr = articleList[i];
-                        if(articleStr){
+                        if (articleStr) {
                             var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-                            content = '<p><a href="' + url + '" target="_blank">' + articleStr + '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
+                            content = '<p><a href="' + url + '" target="_blank">' + articleStr +
+                            '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
                             mapView.infowindow.setContent(name + address + content);
-                        }else{
+                        } else {
                             mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
                         }
                     }
@@ -83,33 +85,33 @@ var mapView = {
         var input = document.getElementById('search-input');
         var searchBox = new google.maps.places.SearchBox(input);
 
-        mapView.gMap.addListener('bounds_changed', function(){
+        mapView.gMap.addListener('bounds_changed', function() {
             searchBox.setBounds(mapView.gMap.getBounds());
         });
 
 
-        $('input[type=checkbox]').change(function(){
+        $('input[type=checkbox]').change(function() {
             var type = this.value;
             var markers = koViewModel.mapMarkers();
             var placeItems = $('ul.places').children();
             //console.log(placeItems);
-            if( !this.checked ){
+            if (!this.checked) {
                 //this is the one using
-                for (var i = 0; i < markers.length; i++){
+                for (var i = 0; i < markers.length; i++) {
                     //console.log("new marker:");
                     //console.log(markers[i]);
-                    if( markers[i].types.indexOf(type) != -1){
+                    if (markers[i].types.indexOf(type) != -1) {
                         //console.log(markers[i]);
                         //console.log("Marker, " + markers[i].name + " has the type " + type + ": ");
                         //console.log(markers[i].types);
                         var idx = markers[i].types.indexOf(type);
                         //console.log(type + " is at location: " + idx);
                         //console.log("Removing '" + type + "' from types...");
-                        var removeThis = markers[i].types.splice(idx, idx + 1);
+                        var removed = markers[i].types.splice(idx, idx + 1);
                         //console.log("The marker's new types are:");
                         //console.log(markers[i].types);
                         //console.log("Checking...is types now empty:");
-                        if (markers[i].types.length == 0){
+                        if (markers[i].types.length == 0) {
                             //console.log("Types array is empty.  Setting map to null...");
                             markers[i].setMap(null);
                             console.log("Find match for:  " + markers[i].name);
@@ -128,17 +130,17 @@ var mapView = {
 
             if (places.length == 0) {
                 return;
-            };
+            }
 
             //console.log('data.mapMarkers.length = ' + data.mapMarkers.length);
-            for( var i = 0; i < data.mapMarkers.length; i++) {
+            for (var i = 0; i < data.mapMarkers.length; i++) {
                 data.mapMarkers[i].setMap(null);
-            };
+            }
 
             //console.log('koViewModel.mapMarkers.length = ' + koViewModel.mapMarkers().length);
-            for( var i = 0; i < koViewModel.mapMarkers().length; i++) {
+            for (var i = 0; i < koViewModel.mapMarkers().length; i++) {
                 koViewModel.mapMarkers()[i].setMap(null);
-            };
+            }
 
             koViewModel.mapMarkers([]);
             koViewModel.placeTypes([]);
@@ -146,9 +148,9 @@ var mapView = {
             var bounds = new google.maps.LatLngBounds();
 
             places.forEach(function(place) {
-                for( i = 0; i < place.types.length; i++ ){
+                for (var i = 0; i < place.types.length; i++ ) {
                     koViewModel.placeTypes.push(place.types[i]);
-                };
+                }
 
                 //This adds marker to map and to mapMarkers()
                 mapView.createMarker(place);
@@ -167,6 +169,7 @@ var mapView = {
         })
     }
 };
+
 var koViewModel = {
     mapMarkers: ko.observableArray(data.mapMarkers),
     placeTypes: ko.observableArray(data.placeTypes),

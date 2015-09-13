@@ -5,6 +5,7 @@ body {
     padding: 0;
 }
 
+
 /*nav*/
 nav.navbar.navbar-default {
     margin-bottom: 0;
@@ -26,13 +27,13 @@ input[type=checkbox] {
 }
 
 li:hover {
-    background-color: #E5E5E5;
+    background-color: #e5e5e5;
 }
 
-#search-input {
+.search-input {
     width: auto;
-    vertical-align: middle;
 }
+
 
 /*map*/
 #map {
