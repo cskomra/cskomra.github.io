@@ -13,8 +13,8 @@ var data = {
                 console.log(pos);
                 //mapView.infoWindow.setPosition(pos);
                 //mapView.infoWindow.setContent('Location found.');
-                //map.setCenter(pos);
-                return pos;
+                mapView.gmap.setCenter(pos);
+                //return pos;
             }, function() {
                 console.log("error getting location");
                 //handleLocationError(true, infoWindow, map.getCenter());
