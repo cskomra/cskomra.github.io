@@ -4,6 +4,7 @@ var data = {
     userLocation: function(){
         console.log("user's location");
         if (navigator.geolocation) {
+            console.log("here1");
             navigator.geolocation.getCurrentPosition(function(position) {
                 var pos = {
                     lat: position.coords.latitude,
