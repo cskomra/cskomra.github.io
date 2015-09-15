@@ -1,8 +1,19 @@
 var data = {
     mapMarkers: [],
     placeTypes: [],
-    userLocation: function(){
-        console.log("user's location");
+    mapCenter: {}
+};
+
+var mapView = {
+    gMap: new google.maps.Map(document.getElementById('map'), {
+        //TODO: accept user-defined center location
+        //center: {lat: 40.1583, lng: -83.0742},
+        center: data.mapCenter,
+        zoom: 13
+        }),
+    prepMapCenter: function(){
+        console.log("try get user's location");
+        var powellOhio = {lat: 40.1583, lng: -83.0742};
         if (navigator.geolocation) {
             console.log("here1");
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -14,28 +25,20 @@ var data = {
                 //mapView.infoWindow.setPosition(pos);
                 //mapView.infoWindow.setContent('Location found.');
                 //map.setCenter(pos);
-                return pos;
+                data.mapCenter = pos;
             }, function() {
                 console.log("error getting location");
                 //handleLocationError(true, infoWindow, map.getCenter());
+                data.mapCenter = powellOhio;
             });
         } else {
             // Browser doesn't support Geolocation
             //handleLocationError(false, infoWindow, map.getCenter());
             console.log("browswer doesn't support geolocation");
             var userLoc = {lat: 40.1583, lng: -83.0742};
-            return userLoc;
+            data.mapCenter = powellOhio;
         }
-    }
-};
-
-var mapView = {
-    gMap: new google.maps.Map(document.getElementById('map'), {
-        //TODO: accept user-defined center location
-        //center: {lat: 40.1583, lng: -83.0742},
-        center: data.userLocation(),
-        zoom: 13
-        }),
+    },
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
     getUnique: function(inputArray) {
         //inputArray: all place-types of all places in search results
@@ -113,6 +116,7 @@ var mapView = {
         return marker;
     },
     initSearchPlaces: function() {
+        mapView.prepMapCenter();
         var input = document.getElementById('search-input');
         var searchBox = new google.maps.places.SearchBox(input);
         //Reset map bounds if necessary
