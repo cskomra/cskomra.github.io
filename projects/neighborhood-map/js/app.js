@@ -4,12 +4,6 @@ var data = {
 };
 
 var mapView = {
-    gMap: new google.maps.Map(document.getElementById('map'), {
-        //TODO: accept user-defined center location
-        //center: {lat: 40.1583, lng: -83.0742},
-        center: mapView.getMapCenter() || {lat: 40.1583, lng: -83.0742},
-        zoom: 13
-        }),
     getMapCenter: function(){
         console.log("try get user's location");
         var powellOhio = {lat: 40.1583, lng: -83.0742};
@@ -38,6 +32,12 @@ var mapView = {
             return powellOhio;
         }
     },
+    gMap: new google.maps.Map(document.getElementById('map'), {
+        //TODO: accept user-defined center location
+        //center: {lat: 40.1583, lng: -83.0742},
+        center: getMapCenter() || {lat: 40.1583, lng: -83.0742},
+        zoom: 13
+        }),
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
     getUnique: function(inputArray) {
         //inputArray: all place-types of all places in search results
