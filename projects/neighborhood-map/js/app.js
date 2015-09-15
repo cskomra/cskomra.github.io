@@ -9,6 +9,7 @@ var data = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
+                console.log(pos);
                 //mapView.infoWindow.setPosition(pos);
                 //mapView.infoWindow.setContent('Location found.');
                 //map.setCenter(pos);
