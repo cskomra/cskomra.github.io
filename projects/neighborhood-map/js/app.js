@@ -1,12 +1,37 @@
 var data = {
     mapMarkers: [],
     placeTypes: [],
+    userLocation: function(){
+        console.log("user's location");
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                //mapView.infoWindow.setPosition(pos);
+                //mapView.infoWindow.setContent('Location found.');
+                //map.setCenter(pos);
+                return pos;
+            }, function() {
+                console.log("error getting location");
+                //handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            //handleLocationError(false, infoWindow, map.getCenter());
+            console.log("browswer doesn't support geolocation");
+            var userLoc = {lat: 40.1583, lng: -83.0742};
+            return userLoc;
+        }
+    }
 };
 
 var mapView = {
     gMap: new google.maps.Map(document.getElementById('map'), {
         //TODO: accept user-defined center location
-        center: {lat: 40.1583, lng: -83.0742},
+        //center: {lat: 40.1583, lng: -83.0742},
+        center: data.userLocation(),
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
