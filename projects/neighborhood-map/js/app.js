@@ -1,11 +1,7 @@
 var data = {
     mapMarkers: [],
-    placeTypes: []
-};
-
-var mapView = {
-    getMapCenter: function(){
-        console.log("try get user's location");
+    placeTypes: [],
+    userLocation: function() {
         var powellOhio = {lat: 40.1583, lng: -83.0742};
         if (navigator.geolocation) {
             console.log("here1");
@@ -31,11 +27,14 @@ var mapView = {
             var userLoc = {lat: 40.1583, lng: -83.0742};
             return powellOhio;
         }
-    },
+    }
+};
+
+var mapView = {
     gMap: new google.maps.Map(document.getElementById('map'), {
         //TODO: accept user-defined center location
         //center: {lat: 40.1583, lng: -83.0742},
-        center: getMapCenter() || {lat: 40.1583, lng: -83.0742},
+        center: data.userLocation(),
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
@@ -115,6 +114,7 @@ var mapView = {
         return marker;
     },
     initSearchPlaces: function() {
+
         var input = document.getElementById('search-input');
         var searchBox = new google.maps.places.SearchBox(input);
         //Reset map bounds if necessary
