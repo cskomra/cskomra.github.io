@@ -1,40 +1,13 @@
 var data = {
     mapMarkers: [],
-    placeTypes: [],
-    userLocation: function() {
-        var powellOhio = {lat: 40.1583, lng: -83.0742};
-        if (navigator.geolocation) {
-            console.log("here1");
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                console.log(pos);
-                //mapView.infoWindow.setPosition(pos);
-                //mapView.infoWindow.setContent('Location found.');
-                mapView.gmap.setCenter(pos);
-                //return pos;
-            }, function() {
-                console.log("error getting location");
-                //handleLocationError(true, infoWindow, map.getCenter());
-                return powellOhio;
-            });
-        } else {
-            // Browser doesn't support Geolocation
-            //handleLocationError(false, infoWindow, map.getCenter());
-            console.log("browswer doesn't support geolocation");
-            var userLoc = {lat: 40.1583, lng: -83.0742};
-            return powellOhio;
-        }
-    }
+    placeTypes: []
 };
 
 var mapView = {
     gMap: new google.maps.Map(document.getElementById('map'), {
         //TODO: accept user-defined center location
         //center: {lat: 40.1583, lng: -83.0742},
-        center: data.userLocation(),
+        center: {lat: -34.397, lng: 150.644},
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
@@ -121,6 +94,33 @@ var mapView = {
         mapView.gMap.addListener('bounds_changed', function() {
             searchBox.setBounds(mapView.gMap.getBounds());
         });
+
+        //Try to setCenter based on user location
+        if (navigator.geolocation) {
+            console.log("here1");
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                console.log(pos);
+                //mapView.infoWindow.setPosition(pos);
+                //mapView.infoWindow.setContent('Location found.');
+                //map.setCenter(pos);
+            }, function() {
+                console.log("error getting location");
+                //handleLocationError(true, infoWindow, map.getCenter());
+                //return powellOhio;
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            //handleLocationError(false, infoWindow, map.getCenter());
+            console.log("browswer doesn't support geolocation");
+            //var userLoc = {lat: 40.1583, lng: -83.0742};
+            //return powellOhio;
+        }
+
+
         //Filter place-types from view-list and markers as they are unchecked
         $('input[type=checkbox]').change(function() {
             var type = this.value;
