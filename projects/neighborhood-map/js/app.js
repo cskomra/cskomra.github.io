@@ -1,17 +1,16 @@
 var data = {
     mapMarkers: [],
-    placeTypes: [],
-    mapCenter: {}
+    placeTypes: []
 };
 
 var mapView = {
     gMap: new google.maps.Map(document.getElementById('map'), {
         //TODO: accept user-defined center location
         //center: {lat: 40.1583, lng: -83.0742},
-        center: data.mapCenter,
+        center: mapView.getMapCenter() || {lat: 40.1583, lng: -83.0742},
         zoom: 13
         }),
-    prepMapCenter: function(){
+    getMapCenter: function(){
         console.log("try get user's location");
         var powellOhio = {lat: 40.1583, lng: -83.0742};
         if (navigator.geolocation) {
@@ -25,18 +24,18 @@ var mapView = {
                 //mapView.infoWindow.setPosition(pos);
                 //mapView.infoWindow.setContent('Location found.');
                 //map.setCenter(pos);
-                data.mapCenter = pos;
+                return pos;
             }, function() {
                 console.log("error getting location");
                 //handleLocationError(true, infoWindow, map.getCenter());
-                data.mapCenter = powellOhio;
+                return powellOhio;
             });
         } else {
             // Browser doesn't support Geolocation
             //handleLocationError(false, infoWindow, map.getCenter());
             console.log("browswer doesn't support geolocation");
             var userLoc = {lat: 40.1583, lng: -83.0742};
-            data.mapCenter = powellOhio;
+            return powellOhio;
         }
     },
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
@@ -116,7 +115,6 @@ var mapView = {
         return marker;
     },
     initSearchPlaces: function() {
-        mapView.prepMapCenter();
         var input = document.getElementById('search-input');
         var searchBox = new google.maps.places.SearchBox(input);
         //Reset map bounds if necessary
