@@ -106,7 +106,7 @@ var mapView = {
                 console.log(pos);
                 //mapView.infoWindow.setPosition(pos);
                 //mapView.infoWindow.setContent('Location found.');
-                //map.setCenter(pos);
+                mapView.gmap.setCenter(pos);
             }, function() {
                 console.log("error getting location");
                 //handleLocationError(true, infoWindow, map.getCenter());
