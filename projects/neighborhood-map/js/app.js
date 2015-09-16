@@ -95,7 +95,7 @@ var mapView = {
             searchBox.setBounds(mapView.gMap.getBounds());
         });
 
-        //Try to setCenter based on user location
+        //Try setCenter based on user location
         if (navigator.geolocation) {
             console.log("here1");
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -110,17 +110,21 @@ var mapView = {
                 mapView.infowindow.open(mapView.gMap);
             }, function() {
                 console.log("error getting location");
-                //handleLocationError(true, infoWindow, map.getCenter());
-                //return powellOhio;
+                handleLocationError(true, mapView.infowindow, mapView.gMap.getCenter());
             });
         } else {
             // Browser doesn't support Geolocation
-            //handleLocationError(false, infoWindow, map.getCenter());
+            handleLocationError(false, mapView.infowindow, mapView.gMap.getCenter());
             console.log("browswer doesn't support geolocation");
-            //var userLoc = {lat: 40.1583, lng: -83.0742};
-            //return powellOhio;
-        }
+        };
 
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                "Error: The Geolocation service failed." :
+                "Error: Your browser doesn't support geolocation.");
+            mapView.infowindow.open(mapView.gMap);
+        }
 
         //Filter place-types from view-list and markers as they are unchecked
         $('input[type=checkbox]').change(function() {
