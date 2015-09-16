@@ -1,13 +1,34 @@
 var data = {
     mapMarkers: [],
-    placeTypes: []
+    placeTypes: [
+        {
+            name: "Accounting",
+            value: "accounting"
+        },
+        {
+            name: "Airport",
+            value: "airport"
+        },
+        {
+            name: "Amusement Park",
+            value: "amusement_park"
+        },
+        {
+            name: "Aquarium",
+            value: "aquarium"
+        },
+        {
+            name: "Art Gallery",
+            value: "art_gallery"
+        }
+    ]
 };
 
 var mapView = {
     gMap: new google.maps.Map(document.getElementById('map'), {
         //TODO: accept user-defined center location
         //center: {lat: 40.1583, lng: -83.0742},
-        center: {lat: -34.397, lng: 150.644},
+        center: {lat: 37.441883, lng: -122.143019},
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
@@ -30,6 +51,7 @@ var mapView = {
         mapView.infowindow.open(mapView.gMap, this);
     },
     createMarker: function(place) {
+        //TODO:  Add icons for different place-types
         var placeLoc = place.geometry.location;
 
         //create marker
@@ -87,7 +109,6 @@ var mapView = {
         return marker;
     },
     initSearchPlaces: function() {
-
         var input = document.getElementById('search-input');
         var searchBox = new google.maps.places.SearchBox(input);
         //Reset map bounds if necessary
@@ -97,25 +118,22 @@ var mapView = {
 
         //Try setCenter based on user location
         if (navigator.geolocation) {
-            console.log("here1");
             navigator.geolocation.getCurrentPosition(function(position) {
                 var pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-                console.log(pos);
                 mapView.infowindow.setPosition(pos);
-                mapView.infowindow.setContent('You are ~here.');
+                mapView.infowindow.setContent('You are somewhere near here.');
                 mapView.gMap.setCenter(pos);
                 mapView.infowindow.open(mapView.gMap);
             }, function() {
-                console.log("error getting location");
+                //Geolocation service failed
                 handleLocationError(true, mapView.infowindow, mapView.gMap.getCenter());
             });
         } else {
             // Browser doesn't support Geolocation
             handleLocationError(false, mapView.infowindow, mapView.gMap.getCenter());
-            console.log("browswer doesn't support geolocation");
         };
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -125,6 +143,8 @@ var mapView = {
                 "Error: Your browser doesn't support geolocation.");
             mapView.infowindow.open(mapView.gMap);
         }
+
+        console.log("here1");
 
         //Filter place-types from view-list and markers as they are unchecked
         $('input[type=checkbox]').change(function() {
@@ -151,9 +171,9 @@ var mapView = {
             if (places.length == 0) {
                 return;
             }
-            for (var i = 0; i < data.mapMarkers.length; i++) {
+            /*for (var i = 0; i < data.mapMarkers.length; i++) {
                 data.mapMarkers[i].setMap(null);
-            }
+            }*/
             for (var i = 0; i < koViewModel.mapMarkers().length; i++) {
                 koViewModel.mapMarkers()[i].setMap(null);
             }
@@ -182,13 +202,42 @@ var mapView = {
             //Clear search box
             input.value = "";
         })
-    }
+    },
+    initNearbyMarkers: function() {
+        var latLng = mapView.gMap.getCenter();
+
+        var loc = {
+            lat: latLng.lat(),
+            lng: latLng.lng()
+        };
+
+        var request = {
+            location: loc,
+            radius: '5000',
+            types: ['restaurant', 'lodging']
+        };
+
+        service = new google.maps.places.PlacesService(mapView.gMap);
+        service.nearbySearch(request, function(results, status) {
+            console.log(results);
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                console.log("status OK");
+                for (var i = 0; i < results.length; i++) {
+                    var place = results[i];
+                    mapView.createMarker(results[i]);
+                }
+            }else{
+                console.log("status NOT OK");
+            }
+        });
+    },
 };
 
 var koViewModel = {
     mapMarkers: ko.observableArray(data.mapMarkers),
     placeTypes: ko.observableArray(data.placeTypes),
-    searches: [mapView.initSearchPlaces()],
+    options: ko.observable("filter"),
+    initializers: [mapView.initSearchPlaces(), mapView.initNearbyMarkers()],
 };
 
 ko.applyBindings(koViewModel);
