@@ -104,8 +104,8 @@ var mapView = {
                     lng: position.coords.longitude
                 };
                 console.log(pos);
-                //mapView.infoWindow.setPosition(pos);
-                //mapView.infoWindow.setContent('Location found.');
+                mapView.infoWindow.setPosition(pos);
+                mapView.infoWindow.setContent('You are ~here.');
                 mapView.gMap.setCenter(pos);
             }, function() {
                 console.log("error getting location");
