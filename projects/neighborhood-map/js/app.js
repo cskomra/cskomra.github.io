@@ -107,6 +107,7 @@ var mapView = {
                 mapView.infowindow.setPosition(pos);
                 mapView.infowindow.setContent('You are ~here.');
                 mapView.gMap.setCenter(pos);
+                mapView.infowindow.open(mapView.gMap);
             }, function() {
                 console.log("error getting location");
                 //handleLocationError(true, infoWindow, map.getCenter());
