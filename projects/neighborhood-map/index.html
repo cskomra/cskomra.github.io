@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Neighborhood Map</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="js/typeahead.jquery.min.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+
+<body>
+	<!--start navbar-->
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class"sr-only"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="#" class="navbar-brand">Neighborhood Map</a>
+			</div>
+
+			<!-- Collect the nav links and other content for toggling-->
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li>
+						<input type="text" id="search-input" class="form-control" placeholder="Search" data-bind="visible: options() == 'search'">
+						<input type="text" id="filter-input" class="form-control" placeholder="Filter" data-bind="visible: options() == 'filter'">
+							<span>
+								<input type="radio" name="options" value="search" data-bind="checked: options"/> Search
+								<input type="radio" name="options" value="filter" data-bind="checked: options"/> Filter
+							</span>
+					</li>
+					<li class="dropdown" data-bind="visible: mapMarkers().length > 0">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Places<span class="caret"></span></a>
+						<ul class="dropdown-menu" data-bind="foreach: mapMarkers">
+							<li data-bind="attr: {id: placeId}, click: mapView.placeItemClicked" class="place-item"><a href="#" data-bind="text: name"></a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--end navbar -->
+	<div id="map"></div>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBScrNGYANSOM7AZq8lsQ6SqNiawp7duIU&libraries=places"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+	<script defer src="js/app.js"></script>
+</body>
+
+</html>
