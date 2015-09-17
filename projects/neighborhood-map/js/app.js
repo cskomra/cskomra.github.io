@@ -2,24 +2,16 @@ var data = {
     mapMarkers: [],
     placeTypes: [
         {
-            name: "Accounting",
-            value: "accounting"
+            label: "Restaurant",
+            value: "restaurant"
         },
         {
-            name: "Airport",
-            value: "airport"
+            label: "Store",
+            value: "store"
         },
         {
-            name: "Amusement Park",
-            value: "amusement_park"
-        },
-        {
-            name: "Aquarium",
-            value: "aquarium"
-        },
-        {
-            name: "Art Gallery",
-            value: "art_gallery"
+            label: "Lodging",
+            value: "lodging"
         }
     ]
 };
@@ -32,6 +24,9 @@ var mapView = {
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
+    hasType: function() {
+        return false
+    },
     getUnique: function(inputArray) {
         //inputArray: all place-types of all places in search results
         //outputArray:  a unique array of place-type values
@@ -42,6 +37,13 @@ var mapView = {
             }
         }
         return outputArray;
+    },
+    initAutoComplete: function() {
+        $('#filter-input').autocomplete({
+            source: data.placeTypes,
+            autoFocus: false,
+            minLength: 1
+        })
     },
     placeItemClicked: function() {
         //Open infowindow and center map based on marker click
@@ -62,7 +64,9 @@ var mapView = {
             animation: google.maps.Animation.DROP,
             name: place.name,
             types: place.types,
-            title: place.name
+            title: place.name,
+            label: place.types,
+            value: place.types
         });
         //add marker to koViewModel.mapMarkers
         koViewModel.mapMarkers.push(marker);
@@ -235,9 +239,22 @@ var mapView = {
 
 var koViewModel = {
     mapMarkers: ko.observableArray(data.mapMarkers),
-    placeTypes: ko.observableArray(data.placeTypes),
+    //placeTypes: ko.observableArray(data.placeTypes),
+    placeTypes: ko.computed( function() {
+        data.mapMarkers.forEach(function(marker) {
+            for (var i = 0; i < marker.types.length; i++ ) {
+                console.log(this);
+                this.push(marker.types[i]);
+            }
+        });
+    }),
+    hasType: ko.observable(true),
     options: ko.observable("filter"),
-    initializers: [mapView.initSearchPlaces(), mapView.initNearbyMarkers()],
+    initializers: [
+        mapView.initSearchPlaces(),
+        mapView.initNearbyMarkers(),
+        mapView.initAutoComplete()
+    ],
 };
 
 ko.applyBindings(koViewModel);

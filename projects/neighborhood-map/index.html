@@ -6,7 +6,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="js/typeahead.jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
@@ -32,15 +33,17 @@
 					<li>
 						<input type="text" id="search-input" class="form-control" placeholder="Search" data-bind="visible: options() == 'search'">
 						<input type="text" id="filter-input" class="form-control" placeholder="Filter" data-bind="visible: options() == 'filter'">
-							<span>
-								<input type="radio" name="options" value="search" data-bind="checked: options"/> Search
-								<input type="radio" name="options" value="filter" data-bind="checked: options"/> Filter
-							</span>
+					</li>
+					<li>
+						<span class="navbar-content">
+							<input type="radio" name="options" value="search" data-bind="checked: options"/> Search
+							<input type="radio" name="options" value="filter" data-bind="checked: options"/> Filter
+						</span>
 					</li>
 					<li class="dropdown" data-bind="visible: mapMarkers().length > 0">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Places<span class="caret"></span></a>
 						<ul class="dropdown-menu" data-bind="foreach: mapMarkers">
-							<li data-bind="attr: {id: placeId}, click: mapView.placeItemClicked" class="place-item"><a href="#" data-bind="text: name"></a></li>
+							<li data-bind="attr: {id: placeId}, click: mapView.placeItemClicked, visible: koViewModel.hasType" class="place-item"><a href="#" data-bind="text: name"></a></li>
 						</ul>
 					</li>
 				</ul>
