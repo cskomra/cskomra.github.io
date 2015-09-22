@@ -6,7 +6,6 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="js/typeahead.jquery.min.js"></script>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
@@ -29,19 +28,32 @@
 			<!-- Collect the nav links and other content for toggling-->
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
+
+					<!--Search and Filter-->
 					<li>
-						<input type="text" id="search-input" class="form-control" placeholder="Search" data-bind="visible: options() == 'search'">
-						<input type="text" id="filter-input" class="form-control" placeholder="Filter" data-bind="visible: options() == 'filter'">
-							<span>
-								<input type="radio" name="options" value="search" data-bind="checked: options"/> Search
-								<input type="radio" name="options" value="filter" data-bind="checked: options"/> Filter
-							</span>
+						<!--Toggle-->
+						<input type="radio" name="options" value="search" data-bind="checked: options"/> Search
+						<br>
+						<input type="radio" name="options" value="filter" data-bind="checked: options"/> Filter
 					</li>
-					<li class="dropdown" data-bind="visible: mapMarkers().length > 0">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Places<span class="caret"></span></a>
-						<ul class="dropdown-menu" data-bind="foreach: mapMarkers">
-							<li data-bind="attr: {id: placeId}, click: mapView.placeItemClicked" class="place-item"><a href="#" data-bind="text: name"></a></li>
-						</ul>
+
+					<li>
+						<!--Search Input-->
+						<!--TODO: Add/Debug ability to do a general search of any type of place-->
+						<input type="text" id="search-input" class="form-control" placeholder="New Search" data-bind="visible: options() == 'search'">
+						<!--Filter Input Based on Types-->
+						<select name="select-type" id="filter-input" class="form-control" data-bind="foreach: placeTypes, visible: options() == 'filter', value: selectedType, event: {change: $root.placeTypeSelected}">
+							<option data-bind="text: name, value: value"></option>
+						</select>
+						<!--<span data-bind="text: $root.selectedType"></span>-->
+					</li>
+
+					<!--Places List-->
+					<li>
+						<select name="select-place" id="place-select" class="form-control" data-bind="optionsCaption: 'Select...', visible: mapMarkers().length > 0, foreach: mapMarkers, value: selectedMarker, event: {change: $root.markerSelected}">
+							<option data-bind="attr: {id: placeId, types: $root.visibility(types)}, visible: $root.visibility(types), text: name, value: placeId"></option>
+						</select>
+						<!--<span data-bind="text: $root.selectedMarker"></span>-->
 					</li>
 				</ul>
 			</div>

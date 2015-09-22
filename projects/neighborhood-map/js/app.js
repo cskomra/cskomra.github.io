@@ -2,6 +2,10 @@ var data = {
     mapMarkers: [],
     placeTypes: [
         {
+            name: "All",
+            value: "all"
+        },
+        {
             name: "Accounting",
             value: "accounting"
         },
@@ -20,102 +24,41 @@ var data = {
         {
             name: "Art Gallery",
             value: "art_gallery"
+        },
+        {
+            name: "Restaurant",
+            value: "restaurant"
+        },
+        {
+            name: "Lodging",
+            value: "lodging"
+        },
+        {
+            name: "Food",
+            value: "food"
+        },
+        {
+            name: "Point of Interest",
+            value: "point_of_interest"
+        },
+        {
+            name: "Cafe",
+            value: "cafe"
         }
-    ]
+    ],
+    selectedType: "all",
+    selectedMarker: {},
 };
 
 var mapView = {
     gMap: new google.maps.Map(document.getElementById('map'), {
         //TODO: accept user-defined center location
-        //center: {lat: 40.1583, lng: -83.0742},
-        center: {lat: 37.441883, lng: -122.143019},
+        center: {lat: 40.1583, lng: -83.0742},  //Powell, OH
+        //center: {lat: 37.441883, lng: -122.143019},  //Palo Alto, CA
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
-    getUnique: function(inputArray) {
-        //inputArray: all place-types of all places in search results
-        //outputArray:  a unique array of place-type values
-        var outputArray = [];
-        for (var i = 0; i < inputArray.length; i++) {
-            if (jQuery.inArray(inputArray[i], outputArray) == -1) {
-                outputArray.push(inputArray[i]);
-            }
-        }
-        return outputArray;
-    },
-    placeItemClicked: function() {
-        //Open infowindow and center map based on marker click
-        var name = '<strong>' + this.name + '</strong>';
-        mapView.infowindow.setContent(name);
-        mapView.gMap.setCenter(this.position);
-        mapView.infowindow.open(mapView.gMap, this);
-    },
-    createMarker: function(place) {
-        //TODO:  Add icons for different place-types
-        var placeLoc = place.geometry.location;
-
-        //create marker
-        var marker = new google.maps.Marker({
-            map: this.gMap,
-            position: placeLoc,
-            placeId: place.place_id,
-            animation: google.maps.Animation.DROP,
-            name: place.name,
-            types: place.types,
-            title: place.name
-        });
-        //add marker to koViewModel.mapMarkers
-        koViewModel.mapMarkers.push(marker);
-
-        //add click listener to marker
-        google.maps.event.addListener(marker, 'click', function() {
-            var name = '<strong>' + place.name + '</strong>';
-            var address = '<p>' + place.formatted_address.split(",")[0] + '</p>';
-            var content = '';
-            //Get wiki article based on place name
-            var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
-            encodeURIComponent(place.name) + '&format=json&callback=wikiCallback';
-            $.ajax(wikiUrl, {
-                dataType: 'jsonp',
-                //Set content if successful
-                success: function( response ) {
-                    var articleList = response[1];
-                    for (var i = 0; i < 1; i++) {
-                        articleStr = articleList[i];
-                        if (articleStr) {
-                            var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-                            content = '<p><a href="' + url + '" target="_blank">' + articleStr +
-                            '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
-                            mapView.infowindow.setContent(name + address + content);
-                        } else {
-                            mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
-                        }
-                    }
-                },
-                //Set content if fail
-                error: function() {
-                    mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
-                }
-            });
-            mapView.infowindow.open(mapView.gMap, this);
-            //Toggle marker animation and close infowindow on click
-            if (marker.getAnimation() !== null) {
-                marker.setAnimation(null);
-                mapView.infowindow.close();
-            } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
-            }
-        });
-        return marker;
-    },
-    initSearchPlaces: function() {
-        var input = document.getElementById('search-input');
-        var searchBox = new google.maps.places.SearchBox(input);
-        //Reset map bounds if necessary
-        mapView.gMap.addListener('bounds_changed', function() {
-            searchBox.setBounds(mapView.gMap.getBounds());
-        });
-
+    getDeviceLocation: function() {
         //Try setCenter based on user location
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -135,7 +78,7 @@ var mapView = {
             // Browser doesn't support Geolocation
             handleLocationError(false, mapView.infowindow, mapView.gMap.getCenter());
         };
-
+        //Current Position error handler
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
             infoWindow.setPosition(pos);
             infoWindow.setContent(browserHasGeolocation ?
@@ -143,62 +86,179 @@ var mapView = {
                 "Error: Your browser doesn't support geolocation.");
             mapView.infowindow.open(mapView.gMap);
         }
+    },
+    openInfowindow: function(place) {
+        var place = place;
+        console.log("openInfowindow place:");
+        console.log(place);
+        var lat = place.position.H;
+        var lng = place.position.L;
+        console.log(lat + "," + lng);
+        var name = '<strong>' + place.name + '</strong>';
+        var address = '<p>' + place.vicinity + '</p>';
+        var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
+        encodeURIComponent(place.name) + '&format=json&callback=wikiCallback';
+        var fourSquareUrl = 'https://api.foursquare.com/v2/venues/search' +
+            '?client_id=' + 'QGG4VTYXOEQWJG1X0SXDFPS11ZU1FUOFKC25BSZWVNXNNDKK' +
+            '&client_secret=' + 'A0JCZY23XGOIFZNLTAVF0L2CTWOH1DOUBDGKRTRCCRDKDTXG' +
+            '&v=' + '20130815' +
+            '&ll=' + lat + "," + lng +
+            '&query=' + place.name;
+        console.log(fourSquareUrl);
 
-        console.log("here1");
+
+        var content = "";
+        $.ajax(wikiUrl, {
+            dataType: 'jsonp',
+            //Set content if successful
+            success: function( response ) {
+                var articleList = response[1];
+                for (var i = 0; i < 1; i++) {
+                    var articleStr = articleList[i];
+                    if (articleStr) {
+                        var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+                        contentLink = '<p>Wiki: <a href="' + url + '" target="_blank">' + articleStr +
+                        '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
+                        mapView.infowindow.setContent(name + address + contentLink);
+                    } else {
+
+                        //Could not get wiki article.  Try foursquare information.
+                        $.ajax(fourSquareUrl, {
+                            dataType: 'jsonp',
+                            //Set content if successful
+                            success: function( response ) {
+                                console.log("foursquare response:");
+                                console.log(response);
+                                var venues = response.response.venues;
+                                if (venues) {
+                                    var ven = venues[0];
+                                    if (ven) {
+                                        var venueURL = ven.url;
+                                        console.log(venueURL);
+                                        contentLink = '<p>Foursquare: <a href="' + venueURL + '" target="_blank">' + venueURL +
+                                        '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
+                                        mapView.infowindow.setContent(name + address + contentLink);
+                                    }
+                                }
+                            },
+                            //Set content if fail
+                            error: function() {
+                                mapView.infowindow.setContent(name + address + '<p>(Foursquare info unavailable)</p>');
+                            }
+                        });
+                    }
+                }
+            },
+            //Set content if fail
+            error: function() {
+                mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
+            }
+        });
+        mapView.infowindow.open(mapView.gMap, place);
+        //Animate marker for 2 secs
+        place.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout( function(){place.setAnimation(null)}, 2000);
+    },
+    clearMapMarkers: function() {
+        markers = koViewModel.mapMarkers();
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        koViewModel.mapMarkers([]);
+    },
+    createMarker: function(place) {
+        //TODO:  Add icons for different place-types
+        console.log("createMarker place:");
+        console.log(place);
+        var placeLoc = place.geometry.location;
+
+        //create marker
+        var marker = new google.maps.Marker({
+            map: this.gMap,
+            position: placeLoc,
+            placeId: place.place_id,
+            animation: google.maps.Animation.DROP,
+            name: place.name,
+            vicinity: place.vicinity,
+            types: place.types,
+            title: place.name
+        });
+        //setMap according to selectedType
+        var selectedType = koViewModel.selectedType();
+        if (selectedType != "all" && marker.types.indexOf(selectedType) == -1 ) {
+            marker.setMap(null)
+        }
+
+        //add marker to koViewModel.mapMarkers
+        koViewModel.mapMarkers.push(marker);
+
+        //add click listener to marker
+        google.maps.event.addListener(marker, 'click', function() {
+            mapView.openInfowindow(marker);
+        });
+        return marker;
+    },
+    initSearchPlaces: function() {
+        var input = document.getElementById('search-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        //Reset map bounds if necessary
+        mapView.gMap.addListener('bounds_changed', function() {
+            searchBox.setBounds(mapView.gMap.getBounds());
+        });
+        mapView.getDeviceLocation();
 
         //Filter place-types from view-list and markers as they are unchecked
-        $('input[type=checkbox]').change(function() {
-            var type = this.value;
+        $("select[name='select-place']").change(function() {
+            var markerID = this.value;
             var markers = koViewModel.mapMarkers();
-            var placeItems = $('ul.places').children();
-            if (!this.checked) {
-                for (var i = 0; i < markers.length; i++) {
-                    if (markers[i].types.indexOf(type) != -1) {
-                        var idx = markers[i].types.indexOf(type);
-                        var removed = markers[i].types.splice(idx, idx + 1);
-                        if (markers[i].types.length == 0) {
-                            markers[i].setMap(null);
-                            var li = document.getElementById(markers[i].placeId);
-                            li.style.display = "none";
-                        }
-                    }
+            for (var i = 0; i < markers.length; i++) {
+                if (markers[i].placeId === markerID) {
+                    mapView.openInfowindow(markers[i]);
+                }
+            }
+        });
+        //setMap on markers according to selected type
+        $("select[name='select-type']").change(function() {
+            var selectedType = this.value;
+            var markers = koViewModel.mapMarkers();
+            for (var i = 0; i < markers.length; i++) {
+                if(selectedType == "all") {
+                    markers[i].setMap(mapView.gMap)
+                }else if(markers[i].types.indexOf(selectedType) == -1 ) {
+                    markers[i].setMap(null)
+                }else{
+                    markers[i].setMap(mapView.gMap)
                 }
             }
         });
         //Process new search
         searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
+            console.log("places");
+            console.log(places);
             if (places.length == 0) {
+                //TODO:  handle this case better
                 return;
-            }
-            /*for (var i = 0; i < data.mapMarkers.length; i++) {
-                data.mapMarkers[i].setMap(null);
-            }*/
-            for (var i = 0; i < koViewModel.mapMarkers().length; i++) {
-                koViewModel.mapMarkers()[i].setMap(null);
-            }
-            koViewModel.mapMarkers([]);
-            koViewModel.placeTypes([]);
-            var bounds = new google.maps.LatLngBounds();
-            //Add each place's place-types to the list
-            places.forEach(function(place) {
-                for (var i = 0; i < place.types.length; i++ ) {
-                    koViewModel.placeTypes.push(place.types[i]);
+                console.log("running 'no places'");
+            }else{
+                //clear existing markers
+                console.log("running else");
+                mapView.clearMapMarkers();
+
+                var bounds = new google.maps.LatLngBounds();
+                for (var i = 0; i < places.length; i++) {
+                    mapView.createMarker(places[i]);
+                    //Set bounds to contain the new place
+                    if (places[i].geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(places[i].geometry.viewport);
+                    } else {
+                        bounds.extend(places[i].geometry.location);
+                    }
                 }
-                //Add place marker to map and to mapMarkers()
-                mapView.createMarker(place);
-                //Set bounds to contain the new place
-                if (place.geometry.viewport) {
-                    // Only geocodes have viewport.
-                    bounds.union(place.geometry.viewport);
-                } else {
-                    bounds.extend(place.geometry.location);
-                }
-            });
-            //Make list of all place-types from all places unique
-            koViewModel.placeTypes(mapView.getUnique(koViewModel.placeTypes()));
-            //Set map bounds to contain all places (this code might be redundant)
-            mapView.gMap.fitBounds(bounds);
+                //Set map bounds to contain all places (this code might be redundant)
+                mapView.gMap.fitBounds(bounds);
+            }
             //Clear search box
             input.value = "";
         })
@@ -214,7 +274,7 @@ var mapView = {
         var request = {
             location: loc,
             radius: '5000',
-            types: ['restaurant', 'lodging']
+            types: ['restaurant', 'lodging', 'cafe']
         };
 
         service = new google.maps.places.PlacesService(mapView.gMap);
@@ -234,10 +294,23 @@ var mapView = {
 };
 
 var koViewModel = {
+    visibility: function(markerTypes){
+        var isVisible = true;
+        var selectedType = this.selectedType();
+        if(selectedType != "all" && markerTypes.indexOf(selectedType) == -1) {
+            isVisible = false;
+        }
+        return isVisible;
+    },
     mapMarkers: ko.observableArray(data.mapMarkers),
     placeTypes: ko.observableArray(data.placeTypes),
     options: ko.observable("filter"),
-    initializers: [mapView.initSearchPlaces(), mapView.initNearbyMarkers()],
+    selectedType: ko.observable(data.selectedType),
+    selectedMarker: ko.observable(data.selectedMarker),
+    initializers: [
+        mapView.initSearchPlaces(),
+        mapView.initNearbyMarkers()
+        ]
 };
 
 ko.applyBindings(koViewModel);
