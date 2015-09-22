@@ -73,23 +73,26 @@ var mapView = {
                 var marker = new google.maps.Marker({
                     position: pos,
                     map: mapView.gMap,
-                    title: 'Hello!'
+                    title: 'YAH Marker'
                   });
+                mapView.gMap.mapMarkers.push(marker);
                 mapView.infowindow.open(mapView.gMap, marker);
             }, function() {
                 //Geolocation service failed
-                handleLocationError(true, mapView.infowindow, mapView.gMap.getCenter());
+                handleLocationError(true);
             });
         } else {
             // Browser doesn't support Geolocation
-            handleLocationError(false, mapView.infowindow, mapView.gMap.getCenter());
+            handleLocationError(false);
         };
         //Current Position error handler
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-            infoWindow.setPosition(pos);
-            infoWindow.setContent(browserHasGeolocation ?
-                "Error: The Geolocation service failed." :
-                "Error: Your browser doesn't support geolocation.");
+        function handleLocationError(browserHasGeolocation) {
+            infowindow = mapView.infowindow;
+            infowindow.setPosition(mapView.gMap.getCenter());
+            infowindow.setContent((browserHasGeolocation ?
+                "<p><h5>Error</h5></p><p>The Geolocation service failed.</p>" :
+                "<p>Error: Your browser doesn't support geolocation.</p>")
+                + "<p>Your search is based on Powell, OH</p>");
             mapView.infowindow.open(mapView.gMap);
         }
     },
