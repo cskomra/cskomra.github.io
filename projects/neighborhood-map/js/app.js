@@ -274,10 +274,20 @@ var mapView = {
         service.nearbySearch(request, function(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 console.log("status OK");
+                var bounds = new google.maps.LatLngBounds();
                 for (var i = 0; i < results.length; i++) {
                     var place = results[i];
-                    mapView.createMarker(results[i]);
+                    mapView.createMarker(place);
+                    //Set bounds to contain the new place
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
                 }
+                //Set map bounds to contain all places (this code might be redundant)
+                mapView.gMap.fitBounds(bounds);
             }else{
                 console.log("status NOT OK");
             }
