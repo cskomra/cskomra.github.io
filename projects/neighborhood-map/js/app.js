@@ -75,7 +75,7 @@ var mapView = {
                     map: mapView.gMap,
                     title: 'YAH Marker'
                   });
-                mapView.gMap.mapMarkers.push(marker);
+                koViewModel.mapMarkers.push(marker);
                 mapView.infowindow.open(mapView.gMap, marker);
             }, function() {
                 //Geolocation service failed
