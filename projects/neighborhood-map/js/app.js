@@ -62,6 +62,7 @@ var mapView = {
         //Try setCenter based on user location
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
+                console.log(position);
                 var pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
