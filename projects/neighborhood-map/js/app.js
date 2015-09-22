@@ -203,7 +203,7 @@ var mapView = {
         mapView.gMap.addListener('bounds_changed', function() {
             searchBox.setBounds(mapView.gMap.getBounds());
         });
-        //mapView.getDeviceLocation();
+        mapView.getDeviceLocation();
 
         //Filter place-types from view-list and markers as they are unchecked
         $("select[name='select-place']").change(function() {
@@ -273,7 +273,7 @@ var mapView = {
             radius: '5000',
             types: ['restaurant', 'lodging', 'cafe']
         };
-        mapView.getDeviceLocation();
+
         service = new google.maps.places.PlacesService(mapView.gMap);
         service.nearbySearch(request, function(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
