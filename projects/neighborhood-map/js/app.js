@@ -1,4 +1,8 @@
 var data = {
+    searchLoc: {
+        placeName: "Powell, OH",
+        placeLoc: {lat: 40.1583, lng: -83.0742}
+    },
     mapMarkers: [],
     placeTypes: [
         {
@@ -53,7 +57,8 @@ var data = {
 var mapView = {
     gMap: new google.maps.Map(document.getElementById('map'), {
         //TODO: accept user-defined center location
-        center: {lat: 40.1583, lng: -83.0742},  //Powell, OH
+        //center: {lat: 40.1583, lng: -83.0742},  //Powell, OH
+        center: data.searchLoc.placeLoc,  //Powell, OH
         //center: {lat: 37.441883, lng: -122.143019},  //Palo Alto, CA
         zoom: 13
         }),
@@ -308,6 +313,7 @@ var koViewModel = {
         }
         return isVisible;
     },
+    searchLoc: ko.observable(data.searchLoc),
     mapMarkers: ko.observableArray(data.mapMarkers),
     placeTypes: ko.observableArray(data.placeTypes),
     options: ko.observable("filter"),
