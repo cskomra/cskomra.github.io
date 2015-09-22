@@ -63,6 +63,21 @@ var mapView = {
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
+    toggleOverlay: function(){
+        console.log("window.innerWidth = " + window.innerWidth);
+        if(window.innerWidth < 768) {
+            var overlay = document.getElementById('overlay');
+            var specialBox = document.getElementById('specialBox');
+            overlay.style.opacity = .5;
+            if(overlay.style.display == "block"){
+                overlay.style.display = "none";
+                specialBox.style.display = "none";
+            } else {
+                overlay.style.display = "block";
+                specialBox.style.display = "block";
+            }
+        }
+    },
     getDeviceLocation: function() {
         //Try setCenter based on user location
         if (navigator.geolocation) {
@@ -138,12 +153,16 @@ var mapView = {
                                 var venues = response.response.venues;
                                 if (venues) {
                                     var ven = venues[0];
-                                    if (ven) {
+                                    if (ven.url) {
                                         var venueURL = ven.url;
                                         contentLink = '<p>Foursquare: <a href="' + venueURL + '" target="_blank">' + venueURL +
                                         '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
                                         mapView.infowindow.setContent(name + address + contentLink);
+                                    }else{
+                                        mapView.infowindow.setContent(name + address + '<p>(Foursquare info unavailable)</p>');
                                     }
+                                }else{
+                                    mapView.infowindow.setContent(name + address + '<p>(Foursquare info unavailable)</p>');
                                 }
                             },
                             //Set content if fail
@@ -321,7 +340,8 @@ var koViewModel = {
     selectedMarker: ko.observable(data.selectedMarker),
     initializers: [
         mapView.initSearchPlaces(),
-        mapView.initNearbyMarkers()
+        mapView.initNearbyMarkers(),
+        mapView.toggleOverlay()
         ]
 };
 
