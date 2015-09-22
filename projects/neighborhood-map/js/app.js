@@ -89,10 +89,10 @@ var mapView = {
         function handleLocationError(browserHasGeolocation) {
             infowindow = mapView.infowindow;
             infowindow.setPosition(mapView.gMap.getCenter());
-            infowindow.setContent((browserHasGeolocation ?
-                "<p><h5>Error</h5></p><p>The Geolocation service failed.</p>" :
-                "<p>Error: Your browser doesn't support geolocation.</p>")
-                + "<p>Your search is based on Powell, OH</p>");
+            var content = browserHasGeolocation ?
+                "<p><h5>Error</h5></p><p>The Geolocation service has failed.</p>" :
+                "<p><h5>Error</h5></p><p>Your browser doesn't support geolocation.</p>";
+            infowindow.setContent(content + "<p>Therefore, your search is based on Powell, OH</p>");
             mapView.infowindow.open(mapView.gMap);
         }
     },
