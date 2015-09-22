@@ -203,7 +203,7 @@ var mapView = {
         mapView.gMap.addListener('bounds_changed', function() {
             searchBox.setBounds(mapView.gMap.getBounds());
         });
-        mapView.getDeviceLocation();
+        //mapView.getDeviceLocation();
 
         //Filter place-types from view-list and markers as they are unchecked
         $("select[name='select-place']").change(function() {
