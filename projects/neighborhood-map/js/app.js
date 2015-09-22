@@ -1,4 +1,5 @@
 var data = {
+    userLocation: {},
     mapMarkers: [],
     placeTypes: [
         {
@@ -67,6 +68,7 @@ var mapView = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
+                data.userLocation(pos);
                 mapView.infowindow.setPosition(pos);
                 mapView.infowindow.setContent('You are somewhere near here.');
                 mapView.gMap.setCenter(pos);
@@ -200,7 +202,7 @@ var mapView = {
         mapView.gMap.addListener('bounds_changed', function() {
             searchBox.setBounds(mapView.gMap.getBounds());
         });
-        mapView.getDeviceLocation();
+        //mapView.getDeviceLocation();
 
         //Filter place-types from view-list and markers as they are unchecked
         $("select[name='select-place']").change(function() {
