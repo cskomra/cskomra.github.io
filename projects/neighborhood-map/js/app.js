@@ -69,7 +69,12 @@ var mapView = {
                 mapView.infowindow.setPosition(pos);
                 mapView.infowindow.setContent('You are somewhere near here.');
                 mapView.gMap.setCenter(pos);
-                mapView.infowindow.open(mapView.gMap);
+                var marker = new google.maps.Marker({
+                    position: pos,
+                    map: mapView.gMap,
+                    title: 'Hello!'
+                  });
+                mapView.infowindow.open(mapView.gMap, marker);
             }, function() {
                 //Geolocation service failed
                 handleLocationError(true, mapView.infowindow, mapView.gMap.getCenter());
@@ -89,11 +94,8 @@ var mapView = {
     },
     openInfowindow: function(place) {
         var place = place;
-        console.log("openInfowindow place:");
-        console.log(place);
         var lat = place.position.H;
         var lng = place.position.L;
-        console.log(lat + "," + lng);
         var name = '<strong>' + place.name + '</strong>';
         var address = '<p>' + place.vicinity + '</p>';
         var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
@@ -104,9 +106,6 @@ var mapView = {
             '&v=' + '20130815' +
             '&ll=' + lat + "," + lng +
             '&query=' + place.name;
-        console.log(fourSquareUrl);
-
-
         var content = "";
         $.ajax(wikiUrl, {
             dataType: 'jsonp',
@@ -127,14 +126,11 @@ var mapView = {
                             dataType: 'jsonp',
                             //Set content if successful
                             success: function( response ) {
-                                console.log("foursquare response:");
-                                console.log(response);
                                 var venues = response.response.venues;
                                 if (venues) {
                                     var ven = venues[0];
                                     if (ven) {
                                         var venueURL = ven.url;
-                                        console.log(venueURL);
                                         contentLink = '<p>Foursquare: <a href="' + venueURL + '" target="_blank">' + venueURL +
                                         '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
                                         mapView.infowindow.setContent(name + address + contentLink);
@@ -168,8 +164,6 @@ var mapView = {
     },
     createMarker: function(place) {
         //TODO:  Add icons for different place-types
-        console.log("createMarker place:");
-        console.log(place);
         var placeLoc = place.geometry.location;
 
         //create marker
@@ -234,17 +228,13 @@ var mapView = {
         //Process new search
         searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
-            console.log("places");
-            console.log(places);
             if (places.length == 0) {
                 //TODO:  handle this case better
                 return;
-                console.log("running 'no places'");
             }else{
                 //clear existing markers
-                console.log("running else");
                 mapView.clearMapMarkers();
-
+                //set map bounds
                 var bounds = new google.maps.LatLngBounds();
                 for (var i = 0; i < places.length; i++) {
                     mapView.createMarker(places[i]);
@@ -279,7 +269,6 @@ var mapView = {
 
         service = new google.maps.places.PlacesService(mapView.gMap);
         service.nearbySearch(request, function(results, status) {
-            console.log(results);
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 console.log("status OK");
                 for (var i = 0; i < results.length; i++) {
