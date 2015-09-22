@@ -261,11 +261,12 @@ var mapView = {
         //get user's location
 
         var latLng = mapView.gMap.getCenter();
-
         var loc = {
             lat: latLng.lat(),
             lng: latLng.lng()
         };
+        console.log("Performing init search on:");
+        console.log(loc);
 
         var request = {
             location: loc,
