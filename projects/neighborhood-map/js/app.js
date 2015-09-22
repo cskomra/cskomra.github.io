@@ -259,7 +259,7 @@ var mapView = {
     },
     initNearbyMarkers: function() {
         //get user's location
-        mapView.getDeviceLocation();
+
         var latLng = mapView.gMap.getCenter();
 
         var loc = {
@@ -272,7 +272,7 @@ var mapView = {
             radius: '5000',
             types: ['restaurant', 'lodging', 'cafe']
         };
-
+        mapView.getDeviceLocation();
         service = new google.maps.places.PlacesService(mapView.gMap);
         service.nearbySearch(request, function(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
