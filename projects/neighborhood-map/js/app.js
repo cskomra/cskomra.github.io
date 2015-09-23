@@ -470,7 +470,7 @@ var mapView = {
         var lat = place.position.H;
         var lng = place.position.L;
         var name = '<strong>' + place.name + '</strong>';
-        var address = '<p>' + place.vicinity + '</p>';
+        var address = '<p>' + (place.vicinity ? place.vicinity : "<em>address unavailable</em>") + '</p>';
         var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
         encodeURIComponent(place.name) + '&format=json&callback=wikiCallback';
         var fourSquareUrl = 'https://api.foursquare.com/v2/venues/search' +
@@ -504,10 +504,10 @@ var mapView = {
                                     var ven = venues[0];
                                     if(ven){
                                         if (ven.url) {
-                                        var venueURL = ven.url;
-                                        contentLink = '<p>Foursquare: <a href="' + venueURL + '" target="_blank">' + venueURL +
-                                        '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
-                                        mapView.infowindow.setContent(name + address + contentLink);
+                                            var venueURL = ven.url;
+                                            contentLink = '<p>Foursquare: <a href="' + venueURL + '" target="_blank">' + venueURL +
+                                            '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
+                                            mapView.infowindow.setContent(name + address + contentLink);
                                         }else{
                                             mapView.infowindow.setContent(name + address + '<p>(url unavailable)</p>');
                                         }
