@@ -6,8 +6,8 @@ var data = {
     mapMarkers: [],
     placeTypes: [
         {
-            name: "All",
-            value: "all"
+            name: "",
+            value: ""
         },
         {
             name: "Accounting",
@@ -30,28 +30,377 @@ var data = {
             value: "art_gallery"
         },
         {
-            name: "Restaurant",
-            value: "restaurant"
+            name: "ATM",
+            value: "atm"
         },
         {
-            name: "Lodging",
-            value: "lodging"
+            name: "Bakery",
+            value: "bakery"
+        },
+        {
+            name: "Bank",
+            value: "bank"
+        },
+        {
+            name: "Bar",
+            value: "bar"
+        },
+        {
+            name: "Beauty Salon",
+            value: "beauty_salon"
+        },
+        {
+            name: "Bicycle Store",
+            value: "bicycle_store"
+        },
+        {
+            name: "Book Store",
+            value: "book_store"
+        },
+        {
+            name: "Bowling Alley",
+            value: "bowling_alley"
+        },
+        {
+            name: "Bus Station",
+            value: "bus_station"
+        },
+        {
+            name: "Cafe",
+            value: "cafe"
+        },
+        {
+            name: "Campground",
+            value: "campground"
+        },
+        {
+            name: "Car Dealer",
+            value: "car_dealer"
+        },
+        {
+            name: "Car Rental",
+            value: "car_rental"
+        },
+        {
+            name: "Car Repair",
+            value: "car_repair"
+        },
+        {
+            name: "Car Wash",
+            value: "car_wash"
+        },
+        {
+            name: "Casino",
+            value: "casino"
+        },
+        {
+            name: "Cemetery",
+            value: "cemetery"
+        },
+        {
+            name: "Church",
+            value: "church"
+        },
+        {
+            name: "City Hall",
+            value: "city_hall"
+        },
+        {
+            name: "Clothing Store",
+            value: "clothing_store"
+        },
+        {
+            name: "Convenience Store",
+            value: "convenience_store"
+        },
+        {
+            name: "Courthouse",
+            value: "courthouse"
+        },
+        {
+            name: "Dentist",
+            value: "dentist"
+        },
+        {
+            name: "Department Store",
+            value: "department_store"
+        },
+        {
+            name: "Doctor",
+            value: "doctor"
+        },
+        {
+            name: "Electrician",
+            value: "electrician"
+        },
+        {
+            name: "Electronics Store",
+            value: "electronics_store"
+        },
+        {
+            name: "Embassy",
+            value: "embassy"
+        },
+        {
+            name: "Establishment",
+            value: "establishment"
+        },
+        {
+            name: "Finance",
+            value: "finance"
+        },
+        {
+            name: "Fire Station",
+            value: "fire_station"
+        },
+        {
+            name: "Florist",
+            value: "florist"
         },
         {
             name: "Food",
             value: "food"
         },
         {
+            name: "Funeral Home",
+            value: "funeral_home"
+        },
+        {
+            name: "Furniture Store",
+            value: "furniture_store"
+        },
+        {
+            name: "Gas Station",
+            value: "gas_station"
+        },
+        {
+            name: "General Contractor",
+            value: "general_contractor"
+        },
+        {
+            name: "Grocery or Supermarket",
+            value: "grocery_or_supermarket"
+        },
+        {
+            name: "Gym",
+            value: "gym"
+        },
+        {
+            name: "Hair Care",
+            value: "hair_care"
+        },
+        {
+            name: "Hardware Store",
+            value: "hardware_store"
+        },
+        {
+            name: "Health",
+            value: "health"
+        },
+        {
+            name: "Hindu Temple",
+            value: "hindu_temple"
+        },
+        {
+            name: "Home Goods Store",
+            value: "home_goods_store"
+        },
+        {
+            name: "Hospital",
+            value: "hospital"
+        },
+        {
+            name: "Insurance Agency",
+            value: "insurance_agency"
+        },
+        {
+            name: "Jewelry Store",
+            value: "jewelry_store"
+        },
+        {
+            name: "Laundry",
+            value: "laundry"
+        },
+        {
+            name: "Lawyer",
+            value: "lawyer"
+        },
+        {
+            name: "Library",
+            value: "library"
+        },
+        {
+            name: "Liquor Store",
+            value: "liquor_store"
+        },
+        {
+            name: "Local Government Office",
+            value: "local_government_office"
+        },
+        {
+            name: "Locksmith",
+            value: "locksmith"
+        },
+        {
+            name: "Lodging",
+            value: "lodging"
+        },
+        {
+            name: "Meal Delivery",
+            value: "meal_delivery"
+        },
+        {
+            name: "Meal Takaway",
+            value: "meal_takaway"
+        },
+        {
+            name: "Mosque",
+            value: "mosque"
+        },
+        {
+            name: "Movie Rental",
+            value: "movie_rental"
+        },
+        {
+            name: "Movie Theater",
+            value: "movie_theater"
+        },
+        {
+            name: "Moving Company",
+            value: "moving_company"
+        },
+        {
+            name: "Museum",
+            value: "museum"
+        },
+        {
+            name: "Night Club",
+            value: "night_club"
+        },
+        {
+            name: "Painter",
+            value: "painter"
+        },
+        {
+            name: "Park",
+            value: "park"
+        },
+        {
+            name: "Parking",
+            value: "parking"
+        },
+        {
+            name: "Pet Store",
+            value: "pet_store"
+        },
+        {
+            name: "Pharmacy",
+            value: "pharmacy"
+        },
+        {
+            name: "Physiotherapist",
+            value: "physiotherapist"
+        },
+        {
+            name: "Place of Worship",
+            value: "place_of_worship"
+        },
+        {
+            name: "Plumber",
+            value: "plumber"
+        },
+        {
             name: "Point of Interest",
             value: "point_of_interest"
         },
         {
-            name: "Cafe",
-            value: "cafe"
+            name: "Police",
+            value: "police"
+        },
+        {
+            name: "Post Office",
+            value: "post_office"
+        },
+        {
+            name: "Real Estate Agency",
+            value: "real_estate_agency"
+        },
+        {
+            name: "Restaurant",
+            value: "restaurant"
+        },
+        {
+            name: "Roofing Contractor",
+            value: "roofing_contractor"
+        },
+        {
+            name: "RV Park",
+            value: "rv_park"
+        },
+        {
+            name: "School",
+            value: "school"
+        },
+        {
+            name: "Shoe Store",
+            value: "shoe_store"
+        },
+        {
+            name: "Shopping Mall",
+            value: "shopping_mall"
+        },
+        {
+            name: "Spa",
+            value: "spa"
+        },
+        {
+            name: "Stadium",
+            value: "stadium"
+        },
+        {
+            name: "Storage",
+            value: "storage"
+        },
+        {
+            name: "Store",
+            value: "store"
+        },
+        {
+            name: "Subway Station",
+            value: "subway_station"
+        },
+        {
+            name: "Synagogue",
+            value: "synagogue"
+        },
+        {
+            name: "Taxi Stand",
+            value: "taxi_stand"
+        },
+        {
+            name: "Train Station",
+            value: "train_station"
+        },
+        {
+            name: "Travel Agency",
+            value: "travel_agency"
+        },
+        {
+            name: "University",
+            value: "university"
+        },
+        {
+            name: "Veterinary Care",
+            value: "veterinary_care"
+        },
+        {
+            name: "Zoo",
+            value: "zoo"
         }
     ],
-    selectedType: "all",
+    //selectedType: "",
     selectedMarker: {},
+    markerTypes: []
 };
 
 var mapView = {
@@ -64,7 +413,6 @@ var mapView = {
         }),
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
     toggleOverlay: function(){
-        console.log("window.innerWidth = " + window.innerWidth);
         if(window.innerWidth < 768) {
             var overlay = document.getElementById('overlay');
             var specialBox = document.getElementById('specialBox');
@@ -79,10 +427,10 @@ var mapView = {
         }
     },
     getDeviceLocation: function() {
+        //TODO: set initNearbyMarkers request.location
         //Try setCenter based on user location
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
-                console.log(position);
                 var pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
@@ -178,6 +526,7 @@ var mapView = {
                 mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
             }
         });
+        mapView.gMap.setCenter(place.position);
         mapView.infowindow.open(mapView.gMap, place);
         //Animate marker for 2 secs
         place.setAnimation(google.maps.Animation.BOUNCE);
@@ -207,7 +556,8 @@ var mapView = {
         });
         //setMap according to selectedType
         var selectedType = koViewModel.selectedType();
-        if (selectedType != "all" && marker.types.indexOf(selectedType) == -1 ) {
+        console.log(selectedType);
+        if (marker.types.indexOf(selectedType) == -1 ) {
             marker.setMap(null)
         }
 
@@ -227,9 +577,8 @@ var mapView = {
         mapView.gMap.addListener('bounds_changed', function() {
             searchBox.setBounds(mapView.gMap.getBounds());
         });
-        //mapView.getDeviceLocation();
 
-        //Filter place-types from view-list and markers as they are unchecked
+        //Open infowindow for selected place
         $("select[name='select-place']").change(function() {
             var markerID = this.value;
             var markers = koViewModel.mapMarkers();
@@ -244,12 +593,13 @@ var mapView = {
             var selectedType = this.value;
             var markers = koViewModel.mapMarkers();
             for (var i = 0; i < markers.length; i++) {
-                if(selectedType == "all") {
-                    markers[i].setMap(mapView.gMap)
-                }else if(markers[i].types.indexOf(selectedType) == -1 ) {
+                if(markers[i].types.indexOf(selectedType) == -1 ) {
                     markers[i].setMap(null)
                 }else{
                     markers[i].setMap(mapView.gMap)
+                    //console.log("Type has been changed.  Set new selected marker.");
+                    //console.log(markers[i].placeId);
+                    koViewModel.selectedMarker(markers[i].placeId);
                 }
             }
         });
@@ -262,8 +612,14 @@ var mapView = {
             }else{
                 //clear existing markers
                 mapView.clearMapMarkers();
-                //set map bounds
+                //get map bounds
                 var bounds = new google.maps.LatLngBounds();
+                console.log(places);
+                //set a new default selectedType
+                //koViewModel.selectedType('food');
+                console.log('set to:');
+                console.log(places[0].types[0]);
+                koViewModel.selectedType(places[0].types[0]);
                 for (var i = 0; i < places.length; i++) {
                     mapView.createMarker(places[i]);
                     //Set bounds to contain the new place
@@ -276,10 +632,11 @@ var mapView = {
                 }
                 //Set map bounds to contain all places (this code might be redundant)
                 mapView.gMap.fitBounds(bounds);
+                //once all markers are created,
             }
             //Clear search box
             input.value = "";
-        })
+        });
     },
     initNearbyMarkers: function() {
         //get user's location
@@ -289,19 +646,20 @@ var mapView = {
             lat: latLng.lat(),
             lng: latLng.lng()
         };
-        console.log("Performing init search on:");
-        console.log(loc);
 
+        //TODO: Allow user to set default values in user options
         var request = {
             location: loc,
             radius: '5000',
-            types: ['restaurant', 'lodging', 'cafe']
+            types: ['restaurant', 'lodging', 'gas_station']
         };
 
         service = new google.maps.places.PlacesService(mapView.gMap);
         service.nearbySearch(request, function(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 console.log("status OK");
+                //set initial selectedType
+                //koViewModel.selectedType(results[0].types[0]);
                 var bounds = new google.maps.LatLngBounds();
                 for (var i = 0; i < results.length; i++) {
                     var place = results[i];
@@ -314,34 +672,48 @@ var mapView = {
                         bounds.extend(place.geometry.location);
                     }
                 }
-                //Set map bounds to contain all places (this code might be redundant)
+                //Set map bounds to contain all places
                 mapView.gMap.fitBounds(bounds);
             }else{
                 console.log("status NOT OK");
             }
         });
-    },
+    }
 };
 
+
 var koViewModel = {
-    visibility: function(markerTypes){
+    showPlace: function(markerTypes) {
         var isVisible = true;
         var selectedType = this.selectedType();
-        if(selectedType != "all" && markerTypes.indexOf(selectedType) == -1) {
+        if(markerTypes.indexOf(selectedType) == -1) {
             isVisible = false;
         }
         return isVisible;
+    },
+    showType: function(value) {
+        var showType = false;
+        //for each mapMarker, .types.indexOf(value) != -1, true
+        var markers = this.mapMarkers();
+        for( var i = 0; i < markers.length; i++ ) {
+            if( markers[i].types.indexOf(value) != -1 ) {
+                showType = true;
+            }
+        }
+        return showType;
     },
     searchLoc: ko.observable(data.searchLoc),
     mapMarkers: ko.observableArray(data.mapMarkers),
     placeTypes: ko.observableArray(data.placeTypes),
     options: ko.observable("filter"),
-    selectedType: ko.observable(data.selectedType),
+    selectedType: ko.observable("point_of_interest"),
     selectedMarker: ko.observable(data.selectedMarker),
+    markerTypes: ko.observableArray(data.markerTypes),
+    userInfoOverlay: mapView.toggleOverlay(),
+    //TODO: refactor initializers
     initializers: [
         mapView.initSearchPlaces(),
-        mapView.initNearbyMarkers(),
-        mapView.toggleOverlay()
+        mapView.initNearbyMarkers()
         ]
 };
 
