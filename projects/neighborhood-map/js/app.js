@@ -466,6 +466,7 @@ var mapView = {
     },
     openInfowindow: function(place) {
         var place = place;
+        console.log(place);
         var lat = place.position.H;
         var lng = place.position.L;
         var name = '<strong>' + place.name + '</strong>';
@@ -501,21 +502,26 @@ var mapView = {
                                 var venues = response.response.venues;
                                 if (venues) {
                                     var ven = venues[0];
-                                    if (ven.url) {
+                                    if(ven){
+                                        if (ven.url) {
                                         var venueURL = ven.url;
                                         contentLink = '<p>Foursquare: <a href="' + venueURL + '" target="_blank">' + venueURL +
                                         '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
                                         mapView.infowindow.setContent(name + address + contentLink);
+                                        }else{
+                                            mapView.infowindow.setContent(name + address + '<p>(url unavailable)</p>');
+                                        }
                                     }else{
-                                        mapView.infowindow.setContent(name + address + '<p>(Foursquare info unavailable)</p>');
+                                        mapView.infowindow.setContent(name + address + '<p>(venue unavailable)</p>');
                                     }
+
                                 }else{
-                                    mapView.infowindow.setContent(name + address + '<p>(Foursquare info unavailable)</p>');
+                                    mapView.infowindow.setContent(name + address + '<p>(venues unavailable)</p>');
                                 }
                             },
                             //Set content if fail
                             error: function() {
-                                mapView.infowindow.setContent(name + address + '<p>(Foursquare info unavailable)</p>');
+                                mapView.infowindow.setContent(name + address + '<p>(information unavailable)</p>');
                             }
                         });
                     }
@@ -556,7 +562,6 @@ var mapView = {
         });
         //setMap according to selectedType
         var selectedType = koViewModel.selectedType();
-        console.log(selectedType);
         if (marker.types.indexOf(selectedType) == -1 ) {
             marker.setMap(null)
         }
@@ -597,8 +602,6 @@ var mapView = {
                     markers[i].setMap(null)
                 }else{
                     markers[i].setMap(mapView.gMap)
-                    //console.log("Type has been changed.  Set new selected marker.");
-                    //console.log(markers[i].placeId);
                     koViewModel.selectedMarker(markers[i].placeId);
                 }
             }
@@ -614,11 +617,6 @@ var mapView = {
                 mapView.clearMapMarkers();
                 //get map bounds
                 var bounds = new google.maps.LatLngBounds();
-                console.log(places);
-                //set a new default selectedType
-                //koViewModel.selectedType('food');
-                console.log('set to:');
-                console.log(places[0].types[0]);
                 koViewModel.selectedType(places[0].types[0]);
                 for (var i = 0; i < places.length; i++) {
                     mapView.createMarker(places[i]);
@@ -647,7 +645,7 @@ var mapView = {
             lng: latLng.lng()
         };
 
-        //TODO: Allow user to set default values in user options
+        //TODO: Allow user to set default request values in user options
         var request = {
             location: loc,
             radius: '5000',
