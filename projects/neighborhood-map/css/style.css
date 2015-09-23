@@ -62,8 +62,9 @@ div#specialBox {
     position: relative;
     z-index: 3;
     margin: 150px auto 0px auto;
+    padding: 10px 5px;
     width: 200px;
-    height: 200px;
+    height: auto;
     background: #FFF;
     color: #000;
 }
