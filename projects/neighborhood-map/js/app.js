@@ -6,497 +6,491 @@ var data = {
     mapMarkers: [],
     placeTypes: [
         {
-            name: "",
-            value: "",
-            color: "#fff"
-        },
-        {
             name: "Accounting",
             value: "accounting",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Airport",
             value: "airport",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Amusement Park",
             value: "amusement_park",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Aquarium",
             value: "aquarium",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Art Gallery",
             value: "art_gallery",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "ATM",
             value: "atm",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Bakery",
             value: "bakery",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Bank",
             value: "bank",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Bar",
             value: "bar",
-            color: "#ffe6e6"
+            style: "background:#ffe6e6;"
         },
         {
             name: "Beauty Salon",
             value: "beauty_salon",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Bicycle Store",
             value: "bicycle_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Book Store",
             value: "book_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Bowling Alley",
             value: "bowling_alley",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Bus Station",
             value: "bus_station",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Cafe",
             value: "cafe",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Campground",
             value: "campground",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Car Dealer",
             value: "car_dealer",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Car Rental",
             value: "car_rental",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Car Repair",
             value: "car_repair",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Car Wash",
             value: "car_wash",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Casino",
             value: "casino",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Cemetery",
             value: "cemetery",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Church",
             value: "church",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "City Hall",
             value: "city_hall",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Clothing Store",
             value: "clothing_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Convenience Store",
             value: "convenience_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Courthouse",
             value: "courthouse",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Dentist",
             value: "dentist",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Department Store",
             value: "department_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Doctor",
             value: "doctor",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Electrician",
             value: "electrician",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Electronics Store",
             value: "electronics_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Embassy",
             value: "embassy",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Establishment",
             value: "establishment",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Finance",
             value: "finance",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Fire Station",
             value: "fire_station",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Florist",
             value: "florist",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Food",
             value: "food",
-            color: "#ffe6e6"
+            style: "background:#ffe6e6;"
         },
         {
             name: "Funeral Home",
             value: "funeral_home",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Furniture Store",
             value: "furniture_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Gas Station",
             value: "gas_station",
-            color: "#e6f2e6"
+            style: "background:#e6f2e6;"
         },
         {
             name: "General Contractor",
             value: "general_contractor",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Grocery or Supermarket",
             value: "grocery_or_supermarket",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Gym",
             value: "gym",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Hair Care",
             value: "hair_care",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Hardware Store",
             value: "hardware_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Health",
             value: "health",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Hindu Temple",
             value: "hindu_temple",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Home Goods Store",
             value: "home_goods_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Hospital",
             value: "hospital",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Insurance Agency",
             value: "insurance_agency",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Jewelry Store",
             value: "jewelry_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Laundry",
             value: "laundry",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Lawyer",
             value: "lawyer",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Library",
             value: "library",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Liquor Store",
             value: "liquor_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Local Government Office",
             value: "local_government_office",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Locksmith",
             value: "locksmith",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Lodging",
             value: "lodging",
-            color: "#fff6e6"
+            style: "background:#fff6e6;"
         },
         {
             name: "Meal Delivery",
             value: "meal_delivery",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Meal Takaway",
             value: "meal_takaway",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Mosque",
             value: "mosque",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Movie Rental",
             value: "movie_rental",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Movie Theater",
             value: "movie_theater",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Moving Company",
             value: "moving_company",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Museum",
             value: "museum",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Night Club",
             value: "night_club",
-            color: "#ffe6e6"
+            style: "background:#ffe6e6;"
         },
         {
             name: "Painter",
             value: "painter",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Park",
             value: "park",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Parking",
             value: "parking",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Pet Store",
             value: "pet_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Pharmacy",
             value: "pharmacy",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Physiotherapist",
             value: "physiotherapist",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Place of Worship",
             value: "place_of_worship",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Plumber",
             value: "plumber",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Point of Interest",
             value: "point_of_interest",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Police",
             value: "police",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Post Office",
             value: "post_office",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Real Estate Agency",
             value: "real_estate_agency",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Restaurant",
             value: "restaurant",
-            color: "#ffe6e6"
+            style: "background:#ffe6e6;"
         },
         {
             name: "Roofing Contractor",
             value: "roofing_contractor",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "RV Park",
             value: "rv_park",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "School",
             value: "school",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Shoe Store",
             value: "shoe_store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Shopping Mall",
             value: "shopping_mall",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Spa",
             value: "spa",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Stadium",
             value: "stadium",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Storage",
             value: "storage",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Store",
             value: "store",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Subway Station",
             value: "subway_station",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Synagogue",
             value: "synagogue",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Taxi Stand",
             value: "taxi_stand",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Train Station",
             value: "train_station",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Travel Agency",
             value: "travel_agency",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "University",
             value: "university",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Veterinary Care",
             value: "veterinary_care",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         },
         {
             name: "Zoo",
             value: "zoo",
-            color: "#fff"
+            style: "background:#d8d8d8;"
         }
     ],
-    //selectedType: "",
     selectedMarker: {},
     markerTypes: []
 };
@@ -525,8 +519,7 @@ var mapView = {
         }
     },
     getDeviceLocation: function() {
-        //TODO: set initNearbyMarkers request.location
-        //Try setCenter based on user location
+        //TODO: request.location 'use my location' in user settings
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var pos = {
@@ -564,11 +557,10 @@ var mapView = {
     },
     openInfowindow: function(place) {
         var place = place;
-        console.log(place);
         var lat = place.position.H;
         var lng = place.position.L;
         var name = '<strong>' + place.name + '</strong>';
-        var address = '<p>' + (place.vicinity ? place.vicinity : "<em>address unavailable</em>") + '</p>';
+        var address = '<p>' + place.vicinity + '</p>';
         var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' +
         encodeURIComponent(place.name) + '&format=json&callback=wikiCallback';
         var fourSquareUrl = 'https://api.foursquare.com/v2/venues/search' +
@@ -646,12 +638,23 @@ var mapView = {
     createMarker: function(place) {
         //TODO:  Add icons for different place-types
         var placeLoc = place.geometry.location;
-        console.log(place);
         var placeAddress = (place.vicinity == undefined) ? place.formatted_address : place.vicinity;
 
-        //create marker
+        //style marker based on the place's first place-type
+        //TODO: make better images (w/ transparent bg)
+        var image = "img/mi-gray-t.gif"
+        var priorityType = place.types[0];
+        if(priorityType == "bar" || priorityType == "food" || priorityType == "night-club" || priorityType == "restaurant"){
+            image = "img/mi-red-t.gif"
+        }else if(priorityType == "gas_station"){
+            image = "img/mi-green-t.gif"
+        }else if(priorityType == "lodging"){
+            image = "img/mi-orange-t.gif"
+        }
+
         var marker = new google.maps.Marker({
             map: this.gMap,
+            icon: image,
             position: placeLoc,
             placeId: place.place_id,
             animation: google.maps.Animation.DROP,
