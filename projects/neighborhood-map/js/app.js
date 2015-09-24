@@ -7,395 +7,493 @@ var data = {
     placeTypes: [
         {
             name: "",
-            value: ""
+            value: "",
+            color: "#fff"
         },
         {
             name: "Accounting",
-            value: "accounting"
+            value: "accounting",
+            color: "#fff"
         },
         {
             name: "Airport",
-            value: "airport"
+            value: "airport",
+            color: "#fff"
         },
         {
             name: "Amusement Park",
-            value: "amusement_park"
+            value: "amusement_park",
+            color: "#fff"
         },
         {
             name: "Aquarium",
-            value: "aquarium"
+            value: "aquarium",
+            color: "#fff"
         },
         {
             name: "Art Gallery",
-            value: "art_gallery"
+            value: "art_gallery",
+            color: "#fff"
         },
         {
             name: "ATM",
-            value: "atm"
+            value: "atm",
+            color: "#fff"
         },
         {
             name: "Bakery",
-            value: "bakery"
+            value: "bakery",
+            color: "#fff"
         },
         {
             name: "Bank",
-            value: "bank"
+            value: "bank",
+            color: "#fff"
         },
         {
             name: "Bar",
-            value: "bar"
+            value: "bar",
+            color: "#ffe6e6"
         },
         {
             name: "Beauty Salon",
-            value: "beauty_salon"
+            value: "beauty_salon",
+            color: "#fff"
         },
         {
             name: "Bicycle Store",
-            value: "bicycle_store"
+            value: "bicycle_store",
+            color: "#fff"
         },
         {
             name: "Book Store",
-            value: "book_store"
+            value: "book_store",
+            color: "#fff"
         },
         {
             name: "Bowling Alley",
-            value: "bowling_alley"
+            value: "bowling_alley",
+            color: "#fff"
         },
         {
             name: "Bus Station",
-            value: "bus_station"
+            value: "bus_station",
+            color: "#fff"
         },
         {
             name: "Cafe",
-            value: "cafe"
+            value: "cafe",
+            color: "#fff"
         },
         {
             name: "Campground",
-            value: "campground"
+            value: "campground",
+            color: "#fff"
         },
         {
             name: "Car Dealer",
-            value: "car_dealer"
+            value: "car_dealer",
+            color: "#fff"
         },
         {
             name: "Car Rental",
-            value: "car_rental"
+            value: "car_rental",
+            color: "#fff"
         },
         {
             name: "Car Repair",
-            value: "car_repair"
+            value: "car_repair",
+            color: "#fff"
         },
         {
             name: "Car Wash",
-            value: "car_wash"
+            value: "car_wash",
+            color: "#fff"
         },
         {
             name: "Casino",
-            value: "casino"
+            value: "casino",
+            color: "#fff"
         },
         {
             name: "Cemetery",
-            value: "cemetery"
+            value: "cemetery",
+            color: "#fff"
         },
         {
             name: "Church",
-            value: "church"
+            value: "church",
+            color: "#fff"
         },
         {
             name: "City Hall",
-            value: "city_hall"
+            value: "city_hall",
+            color: "#fff"
         },
         {
             name: "Clothing Store",
-            value: "clothing_store"
+            value: "clothing_store",
+            color: "#fff"
         },
         {
             name: "Convenience Store",
-            value: "convenience_store"
+            value: "convenience_store",
+            color: "#fff"
         },
         {
             name: "Courthouse",
-            value: "courthouse"
+            value: "courthouse",
+            color: "#fff"
         },
         {
             name: "Dentist",
-            value: "dentist"
+            value: "dentist",
+            color: "#fff"
         },
         {
             name: "Department Store",
-            value: "department_store"
+            value: "department_store",
+            color: "#fff"
         },
         {
             name: "Doctor",
-            value: "doctor"
+            value: "doctor",
+            color: "#fff"
         },
         {
             name: "Electrician",
-            value: "electrician"
+            value: "electrician",
+            color: "#fff"
         },
         {
             name: "Electronics Store",
-            value: "electronics_store"
+            value: "electronics_store",
+            color: "#fff"
         },
         {
             name: "Embassy",
-            value: "embassy"
+            value: "embassy",
+            color: "#fff"
         },
         {
             name: "Establishment",
-            value: "establishment"
+            value: "establishment",
+            color: "#fff"
         },
         {
             name: "Finance",
-            value: "finance"
+            value: "finance",
+            color: "#fff"
         },
         {
             name: "Fire Station",
-            value: "fire_station"
+            value: "fire_station",
+            color: "#fff"
         },
         {
             name: "Florist",
-            value: "florist"
+            value: "florist",
+            color: "#fff"
         },
         {
             name: "Food",
-            value: "food"
+            value: "food",
+            color: "#ffe6e6"
         },
         {
             name: "Funeral Home",
-            value: "funeral_home"
+            value: "funeral_home",
+            color: "#fff"
         },
         {
             name: "Furniture Store",
-            value: "furniture_store"
+            value: "furniture_store",
+            color: "#fff"
         },
         {
             name: "Gas Station",
-            value: "gas_station"
+            value: "gas_station",
+            color: "#e6f2e6"
         },
         {
             name: "General Contractor",
-            value: "general_contractor"
+            value: "general_contractor",
+            color: "#fff"
         },
         {
             name: "Grocery or Supermarket",
-            value: "grocery_or_supermarket"
+            value: "grocery_or_supermarket",
+            color: "#fff"
         },
         {
             name: "Gym",
-            value: "gym"
+            value: "gym",
+            color: "#fff"
         },
         {
             name: "Hair Care",
-            value: "hair_care"
+            value: "hair_care",
+            color: "#fff"
         },
         {
             name: "Hardware Store",
-            value: "hardware_store"
+            value: "hardware_store",
+            color: "#fff"
         },
         {
             name: "Health",
-            value: "health"
+            value: "health",
+            color: "#fff"
         },
         {
             name: "Hindu Temple",
-            value: "hindu_temple"
+            value: "hindu_temple",
+            color: "#fff"
         },
         {
             name: "Home Goods Store",
-            value: "home_goods_store"
+            value: "home_goods_store",
+            color: "#fff"
         },
         {
             name: "Hospital",
-            value: "hospital"
+            value: "hospital",
+            color: "#fff"
         },
         {
             name: "Insurance Agency",
-            value: "insurance_agency"
+            value: "insurance_agency",
+            color: "#fff"
         },
         {
             name: "Jewelry Store",
-            value: "jewelry_store"
+            value: "jewelry_store",
+            color: "#fff"
         },
         {
             name: "Laundry",
-            value: "laundry"
+            value: "laundry",
+            color: "#fff"
         },
         {
             name: "Lawyer",
-            value: "lawyer"
+            value: "lawyer",
+            color: "#fff"
         },
         {
             name: "Library",
-            value: "library"
+            value: "library",
+            color: "#fff"
         },
         {
             name: "Liquor Store",
-            value: "liquor_store"
+            value: "liquor_store",
+            color: "#fff"
         },
         {
             name: "Local Government Office",
-            value: "local_government_office"
+            value: "local_government_office",
+            color: "#fff"
         },
         {
             name: "Locksmith",
-            value: "locksmith"
+            value: "locksmith",
+            color: "#fff"
         },
         {
             name: "Lodging",
-            value: "lodging"
+            value: "lodging",
+            color: "#fff6e6"
         },
         {
             name: "Meal Delivery",
-            value: "meal_delivery"
+            value: "meal_delivery",
+            color: "#fff"
         },
         {
             name: "Meal Takaway",
-            value: "meal_takaway"
+            value: "meal_takaway",
+            color: "#fff"
         },
         {
             name: "Mosque",
-            value: "mosque"
+            value: "mosque",
+            color: "#fff"
         },
         {
             name: "Movie Rental",
-            value: "movie_rental"
+            value: "movie_rental",
+            color: "#fff"
         },
         {
             name: "Movie Theater",
-            value: "movie_theater"
+            value: "movie_theater",
+            color: "#fff"
         },
         {
             name: "Moving Company",
-            value: "moving_company"
+            value: "moving_company",
+            color: "#fff"
         },
         {
             name: "Museum",
-            value: "museum"
+            value: "museum",
+            color: "#fff"
         },
         {
             name: "Night Club",
-            value: "night_club"
+            value: "night_club",
+            color: "#ffe6e6"
         },
         {
             name: "Painter",
-            value: "painter"
+            value: "painter",
+            color: "#fff"
         },
         {
             name: "Park",
-            value: "park"
+            value: "park",
+            color: "#fff"
         },
         {
             name: "Parking",
-            value: "parking"
+            value: "parking",
+            color: "#fff"
         },
         {
             name: "Pet Store",
-            value: "pet_store"
+            value: "pet_store",
+            color: "#fff"
         },
         {
             name: "Pharmacy",
-            value: "pharmacy"
+            value: "pharmacy",
+            color: "#fff"
         },
         {
             name: "Physiotherapist",
-            value: "physiotherapist"
+            value: "physiotherapist",
+            color: "#fff"
         },
         {
             name: "Place of Worship",
-            value: "place_of_worship"
+            value: "place_of_worship",
+            color: "#fff"
         },
         {
             name: "Plumber",
-            value: "plumber"
+            value: "plumber",
+            color: "#fff"
         },
         {
             name: "Point of Interest",
-            value: "point_of_interest"
+            value: "point_of_interest",
+            color: "#fff"
         },
         {
             name: "Police",
-            value: "police"
+            value: "police",
+            color: "#fff"
         },
         {
             name: "Post Office",
-            value: "post_office"
+            value: "post_office",
+            color: "#fff"
         },
         {
             name: "Real Estate Agency",
-            value: "real_estate_agency"
+            value: "real_estate_agency",
+            color: "#fff"
         },
         {
             name: "Restaurant",
-            value: "restaurant"
+            value: "restaurant",
+            color: "#ffe6e6"
         },
         {
             name: "Roofing Contractor",
-            value: "roofing_contractor"
+            value: "roofing_contractor",
+            color: "#fff"
         },
         {
             name: "RV Park",
-            value: "rv_park"
+            value: "rv_park",
+            color: "#fff"
         },
         {
             name: "School",
-            value: "school"
+            value: "school",
+            color: "#fff"
         },
         {
             name: "Shoe Store",
-            value: "shoe_store"
+            value: "shoe_store",
+            color: "#fff"
         },
         {
             name: "Shopping Mall",
-            value: "shopping_mall"
+            value: "shopping_mall",
+            color: "#fff"
         },
         {
             name: "Spa",
-            value: "spa"
+            value: "spa",
+            color: "#fff"
         },
         {
             name: "Stadium",
-            value: "stadium"
+            value: "stadium",
+            color: "#fff"
         },
         {
             name: "Storage",
-            value: "storage"
+            value: "storage",
+            color: "#fff"
         },
         {
             name: "Store",
-            value: "store"
+            value: "store",
+            color: "#fff"
         },
         {
             name: "Subway Station",
-            value: "subway_station"
+            value: "subway_station",
+            color: "#fff"
         },
         {
             name: "Synagogue",
-            value: "synagogue"
+            value: "synagogue",
+            color: "#fff"
         },
         {
             name: "Taxi Stand",
-            value: "taxi_stand"
+            value: "taxi_stand",
+            color: "#fff"
         },
         {
             name: "Train Station",
-            value: "train_station"
+            value: "train_station",
+            color: "#fff"
         },
         {
             name: "Travel Agency",
-            value: "travel_agency"
+            value: "travel_agency",
+            color: "#fff"
         },
         {
             name: "University",
-            value: "university"
+            value: "university",
+            color: "#fff"
         },
         {
             name: "Veterinary Care",
-            value: "veterinary_care"
+            value: "veterinary_care",
+            color: "#fff"
         },
         {
             name: "Zoo",
-            value: "zoo"
+            value: "zoo",
+            color: "#fff"
         }
     ],
     //selectedType: "",
@@ -548,6 +646,8 @@ var mapView = {
     createMarker: function(place) {
         //TODO:  Add icons for different place-types
         var placeLoc = place.geometry.location;
+        console.log(place);
+        var placeAddress = (place.vicinity == undefined) ? place.formatted_address : place.vicinity;
 
         //create marker
         var marker = new google.maps.Marker({
@@ -556,7 +656,7 @@ var mapView = {
             placeId: place.place_id,
             animation: google.maps.Animation.DROP,
             name: place.name,
-            vicinity: place.vicinity,
+            vicinity: placeAddress,
             types: place.types,
             title: place.name
         });
@@ -603,6 +703,7 @@ var mapView = {
                 }else{
                     markers[i].setMap(mapView.gMap)
                     koViewModel.selectedMarker(markers[i].placeId);
+                    //TODO: Recenter viewport around all map markers
                 }
             }
         });
