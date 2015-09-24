@@ -48,7 +48,7 @@ var data = {
         {
             name: "Bar",
             value: "bar",
-            style: "background:#ffe6e6;"
+            style: "background:#ff9999;"
         },
         {
             name: "Beauty Salon",
@@ -193,7 +193,7 @@ var data = {
         {
             name: "Food",
             value: "food",
-            style: "background:#ffe6e6;"
+            style: "background:#ff9999;"
         },
         {
             name: "Funeral Home",
@@ -208,7 +208,7 @@ var data = {
         {
             name: "Gas Station",
             value: "gas_station",
-            style: "background:#e6f2e6;"
+            style: "background:#99cc99;"
         },
         {
             name: "General Contractor",
@@ -298,7 +298,7 @@ var data = {
         {
             name: "Lodging",
             value: "lodging",
-            style: "background:#fff6e6;"
+            style: "background:#ffdb99;"
         },
         {
             name: "Meal Delivery",
@@ -338,7 +338,7 @@ var data = {
         {
             name: "Night Club",
             value: "night_club",
-            style: "background:#ffe6e6;"
+            style: "background:#ff9999;"
         },
         {
             name: "Painter",
@@ -403,7 +403,7 @@ var data = {
         {
             name: "Restaurant",
             value: "restaurant",
-            style: "background:#ffe6e6;"
+            style: "background:#ff9999;"
         },
         {
             name: "Roofing Contractor",
@@ -643,12 +643,12 @@ var mapView = {
         //style marker based on the place's first place-type
         //TODO: make better images (w/ transparent bg)
         var image = "img/mi-gray-t.gif"
-        var priorityType = place.types[0];
-        if(priorityType == "bar" || priorityType == "food" || priorityType == "night-club" || priorityType == "restaurant"){
+        var priorityType = place.types;
+        if(priorityType.indexOf("restaurant") != -1) {
             image = "img/mi-red-t.gif"
-        }else if(priorityType == "gas_station"){
+        }else if(priorityType.indexOf("gas_station") != -1) {
             image = "img/mi-green-t.gif"
-        }else if(priorityType == "lodging"){
+        }else if(priorityType.indexOf("lodging") != -1) {
             image = "img/mi-orange-t.gif"
         }
 
