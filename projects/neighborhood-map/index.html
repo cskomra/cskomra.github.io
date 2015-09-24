@@ -12,12 +12,12 @@
 
 <body>
 	<!--start navbar-->
-	<nav class="navbar navbar-default" role="navigation">
+	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
-					<span class"sr-only"></span>
+					<span class="sr-only"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -41,14 +41,14 @@
 						<input type="text" id="search-input" class="form-control" placeholder="New Search" data-bind="visible: options() == 'search'">
 						<!--Filter Input Based on Types-->
 						<select name="select-type" id="filter-input" class="form-control" data-bind="foreach: placeTypes, visible: options() == 'filter', value: selectedType, event: {change: $root.placeTypeSelected}">
-							<option data-bind="text: name, value: value, visible: $root.showType(value), attr: {style: style}"></option>
+							<option data-bind="text: name, value: value, visible: $root.showType(value), attr: {style: style}">label</option>
 						</select>
 					</li>
 
 					<!--Places List-->
 					<li>
 						<select name="select-place" id="place-select" class="form-control" data-bind="visible: mapMarkers().length > 0, foreach: mapMarkers, value: selectedMarker, event: {change: $root.markerSelected}">
-							<option data-bind="attr: {id: placeId, types: $root.showPlace(types)}, visible: $root.showPlace(types), text: name, value: placeId"></option>
+							<option data-bind="attr: {id: placeId, types: $root.showPlace(types)}, visible: $root.showPlace(types), text: name, value: placeId">label</option>
 						</select>
 					</li>
 				</ul>
