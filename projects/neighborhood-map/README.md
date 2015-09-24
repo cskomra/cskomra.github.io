@@ -18,7 +18,7 @@ Type a location or type of place in the search box and hit `enter`.
 Searches return three basic elements:  1) a list of places, 2) a list of place-types associated with those places, and 3) a map with markers that represent those places.
 
 ###Filter Based on Place Type
-Click on any place-type value to filter both the Places List and the Markers on the map.  Only places that are of that type will be shown in the list and on the map.
+Click on any place-type value to filter both the Places List and Markers on the map.  Only places that are of that type will be shown in the list and on the map.  Places and Markers are color coded.
 
 ###Locate a Specific Place From the List of Places
 Click on any place name in the list to center the map on that place's marker, open it's `infowindow`, and get additional information about it.
