@@ -38,22 +38,18 @@
 
 					<li>
 						<!--Search Input-->
-						<!--TODO: Debug - ability to do a general search of any type of place-->
 						<input type="text" id="search-input" class="form-control" placeholder="New Search" data-bind="visible: options() == 'search'">
 						<!--Filter Input Based on Types-->
 						<select name="select-type" id="filter-input" class="form-control" data-bind="foreach: placeTypes, visible: options() == 'filter', value: selectedType, event: {change: $root.placeTypeSelected}">
 							<option data-bind="text: name, value: value, visible: $root.showType(value), attr: {style: style}"></option>
 						</select>
-						<!--<input data-bind="value: $root.selectedType"></input>-->
 					</li>
 
 					<!--Places List-->
 					<li>
-						<!--TODO: debug 'Select...' value.-->
 						<select name="select-place" id="place-select" class="form-control" data-bind="visible: mapMarkers().length > 0, foreach: mapMarkers, value: selectedMarker, event: {change: $root.markerSelected}">
 							<option data-bind="attr: {id: placeId, types: $root.showPlace(types)}, visible: $root.showPlace(types), text: name, value: placeId"></option>
 						</select>
-						<!--<span data-bind="text: $root.selectedMarker"></span>-->
 					</li>
 				</ul>
 			</div>
@@ -63,14 +59,14 @@
 	<!-- Start Overlay -->
 	<div id="overlay"></div>
 	<!-- End Overlay -->
-		<!-- Start Special Centered Box -->
-		<div id="specialBox">
-			<!--TODO: Add "don't show this again" functionality-->
-			<p>Click on hamburger menu (top right) to access Neighborhood Map functionality.</p>
-			<p><a href="readme.md" target="_blank">Neighborhood Map ReadMe<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></P>
-			<button onmousedown="mapView.toggleOverlay()">Close This</button>
-		</div>
-		<!-- End Special Centered Box -->
+	<!-- Start Special Centered Box -->
+	<div id="specialBox">
+		<!--TODO: Add "don't show this again" functionality-->
+		<p>Click on hamburger menu (top right) to access Neighborhood Map functionality.</p>
+		<p><a href="readme.md" target="_blank">Neighborhood Map ReadMe<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></P>
+		<button onmousedown="mapView.toggleOverlay()">Close This</button>
+	</div>
+	<!-- End Special Centered Box -->
 	<div id="map"></div>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBScrNGYANSOM7AZq8lsQ6SqNiawp7duIU&libraries=places"></script>

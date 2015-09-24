@@ -504,7 +504,7 @@ var mapView = {
         zoom: 13
         }),
     infowindow: new google.maps.InfoWindow({maxWidth: 300}),
-    toggleOverlay: function(){
+    toggleOverlay: function() {
         if(window.innerWidth < 768) {
             var overlay = document.getElementById('overlay');
             var specialBox = document.getElementById('specialBox');
@@ -519,7 +519,7 @@ var mapView = {
         }
     },
     getDeviceLocation: function() {
-        //TODO: request.location 'use my location' in user settings
+        //TODO: use with 'use my location' in user settings
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var pos = {
@@ -636,12 +636,10 @@ var mapView = {
         koViewModel.mapMarkers([]);
     },
     createMarker: function(place) {
-        //TODO:  Add icons for different place-types
         var placeLoc = place.geometry.location;
         var placeAddress = (place.vicinity == undefined) ? place.formatted_address : place.vicinity;
 
-        //style marker based on the place's first place-type
-        //TODO: make better images (w/ transparent bg)
+        //style marker based on place-type
         var image = "img/mi-gray-t.gif"
         var priorityType = place.types;
         if(priorityType.indexOf("restaurant") != -1) {
@@ -663,6 +661,7 @@ var mapView = {
             types: place.types,
             title: place.name
         });
+
         //setMap according to selectedType
         var selectedType = koViewModel.selectedType();
         if (marker.types.indexOf(selectedType) == -1 ) {
@@ -732,24 +731,21 @@ var mapView = {
                         bounds.extend(places[i].geometry.location);
                     }
                 }
-                //Set map bounds to contain all places (this code might be redundant)
+                //Set map bounds to contain all places
                 mapView.gMap.fitBounds(bounds);
-                //once all markers are created,
             }
             //Clear search box
             input.value = "";
         });
     },
     initNearbyMarkers: function() {
-        //get user's location
-
         var latLng = mapView.gMap.getCenter();
         var loc = {
             lat: latLng.lat(),
             lng: latLng.lng()
         };
 
-        //TODO: Allow user to set default request values in user options
+        //TODO: Allow user to set default request values in 'user preferences'
         var request = {
             location: loc,
             radius: '5000',
@@ -759,9 +755,6 @@ var mapView = {
         service = new google.maps.places.PlacesService(mapView.gMap);
         service.nearbySearch(request, function(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                console.log("status OK");
-                //set initial selectedType
-                //koViewModel.selectedType(results[0].types[0]);
                 var bounds = new google.maps.LatLngBounds();
                 for (var i = 0; i < results.length; i++) {
                     var place = results[i];
@@ -777,12 +770,12 @@ var mapView = {
                 //Set map bounds to contain all places
                 mapView.gMap.fitBounds(bounds);
             }else{
+                //TODO handle this case better
                 console.log("status NOT OK");
             }
         });
     }
 };
-
 
 var koViewModel = {
     showPlace: function(markerTypes) {
