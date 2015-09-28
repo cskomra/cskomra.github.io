@@ -1,7 +1,22 @@
+
 var data = {
+    latLng: {},
+    mapType: null,
+    map: {},
+    mapOptions: {
+        center: {},
+        zoom: null,
+        mapTypeId: null
+    },
+    infowindow: {},
+    marker: {},
+    searchBox: {},
+    service: {},
+    bounds: {},
+    placesService: {},
     searchLoc: {
-        placeName: "Powell, OH",
-        placeLoc: {lat: 40.1583, lng: -83.0742}
+        placeName: "Powell, OH",  //TODO: change to 'name'
+        placeLoc: {lat: 40.1583, lng: -83.0742} //TODO: change to 'value'
     },
     mapMarkers: [],
     placeTypes: [
@@ -495,20 +510,137 @@ var data = {
     markerTypes: []
 };
 
+var appInit = {
+    callback: function() {
+        appInit.log('google-loader has been loaded, but not the maps-API ');
+    },
+    loadScript: function(src,callback){
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        if(callback)script.onload=callback;
+        document.getElementsByTagName("head")[0].appendChild(script);
+        script.src = src;
+    },
+    initNearbyMarkers: function() {
+        //TODO: Allow user to set default values in 'user preferences'
+        var request = {
+            location: data.searchLoc.placeLoc,
+            radius: '5000',
+            types: ['restaurant', 'lodging', 'gas_station']
+        };
+        data.service.nearbySearch(request, function(results, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                console.log("status OK");
+                data.bounds = new google.maps.LatLngBounds();
+                for (var i = 0; i < results.length; i++) {
+                    var place = results[i];
+
+                    mapView.createMarker(place);
+                    //Set bounds to contain the new place
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        data.bounds.union(place.geometry.viewport);
+                    } else {
+                        data.bounds.extend(place.geometry.location);
+                    }
+                }
+                //Set map bounds to contain all places
+                data.map.fitBounds(data.bounds);
+            }else{
+                //TODO handle this case better
+                console.log("status NOT OK");
+            }
+        });
+    },
+    initialize: function() {
+        //appInit.log('maps-API has been loaded, ready to use');
+        data.latLng = new google.maps.LatLng(-34.397, 150.644);
+        data.mapOptions.latLng = data.latLng;
+        data.mapOptions.center = data.latLng;
+        data.mapOptions.zoom = 13;
+        data.mapOptions.mapTypeId = google.maps.MapTypeId.ROADMAP;
+        var input = document.getElementById('search-input');
+        data.map = new google.maps.Map(document.getElementById('map'), data.mapOptions);
+        data.searchBox = new google.maps.places.SearchBox(input);
+
+        data.map.addListener('bounds_changed', function() {
+            data.searchBox.setBounds(data.map.getBounds());
+        });
+
+        data.searchBox.addListener('places_changed', function() {
+            var places = data.searchBox.getPlaces();
+            if (places.length === 0) {
+                //TODO:  handle this case better
+                return;
+            }else{
+                //clear existing markers
+                mapView.clearMapMarkers();
+                koViewModel.selectedType(places[0].types[0]);
+                //get map bounds
+                for (var i = 0; i < places.length; i++) {
+                    mapView.createMarker(places[i]);
+                    //Set bounds to contain the new place
+                    if (places[i].geometry.viewport) {
+                        // Only geocodes have viewport.
+                        data.bounds.union(places[i].geometry.viewport);
+                    } else {
+                        data.bounds.extend(places[i].geometry.location);
+                    }
+                }
+                //Set map bounds to contain all places
+                data.map.fitBounds(data.bounds);
+            }
+            //Clear search box
+            input.value = "";
+        });
+
+        //Open infowindow for selected place
+        $("select[name='select-place']").change(function() {
+            var markerID = this.value;
+            var markers = koViewModel.mapMarkers();
+            for (var i = 0; i < markers.length; i++) {
+                if (markers[i].placeId === markerID) {
+                    mapView.openInfowindow(markers[i]);
+                }
+            }
+        });
+
+        //setMap on markers according to selected type
+        $("select[name='select-type']").change(function() {
+            var selectedType = this.value;
+            var markers = koViewModel.mapMarkers();
+            for (var i = 0; i < markers.length; i++) {
+                if(markers[i].types.indexOf(selectedType) == -1 ) {
+                    markers[i].setMap(null);
+                }else{
+                    markers[i].setMap(data.map);
+                    koViewModel.selectedMarker(markers[i].placeId);
+                    //Set bounds to contain the new place
+                    data.bounds.extend(markers[i].position);
+                }
+            }
+            data.map.fitBounds(data.bounds);
+        });
+
+        data.infowindow = new google.maps.InfoWindow({maxWidth: 300});
+        data.service = new google.maps.places.PlacesService(data.map);
+        mapView.toggleOverlay();
+        appInit.initNearbyMarkers();
+    },
+    log: function(str){
+        document.getElementsByTagName('pre')[0].appendChild(document.createTextNode('['+new Date().getTime()+']\n'+str+'\n\n'));
+    }
+};
+
+appInit.loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBScrNGYANSOM7AZq8lsQ6SqNiawp7duIU&libraries=places&callback=appInit.initialize',
+    false);  //Reference:  http://jsfiddle.net/doktormolle/7cu2f/
+
 var mapView = {
-    gMap: new google.maps.Map(document.getElementById('map'), {
-        //TODO: accept user-defined center location
-        //center: {lat: 40.1583, lng: -83.0742},  //Powell, OH
-        center: data.searchLoc.placeLoc,  //Powell, OH
-        //center: {lat: 37.441883, lng: -122.143019},  //Palo Alto, CA
-        zoom: 13
-        }),
-    infowindow: new google.maps.InfoWindow({maxWidth: 300}),
     toggleOverlay: function() {
         if(window.innerWidth < 768) {
             var overlay = document.getElementById('overlay');
             var specialBox = document.getElementById('specialBox');
-            overlay.style.opacity = .5;
+            overlay.style.opacity = 0.5;
             if(overlay.style.display == "block"){
                 overlay.style.display = "none";
                 specialBox.style.display = "none";
@@ -529,12 +661,14 @@ var mapView = {
                 mapView.infowindow.setPosition(pos);
                 mapView.infowindow.setContent('You are somewhere near here.');
                 mapView.gMap.setCenter(pos);
+
                 var marker = new google.maps.Marker({
                     position: pos,
-                    map: mapView.gMap,
+                    map: data.map,
                     title: 'YAH Marker'
                   });
-                //koViewModel.mapMarkers.push(marker);
+
+                koViewModel.mapMarkers.push(marker);
                 mapView.infowindow.open(mapView.gMap, marker);
             }, function() {
                 //Geolocation service failed
@@ -543,20 +677,21 @@ var mapView = {
         } else {
             // Browser doesn't support Geolocation
             handleLocationError(false);
-        };
+        }
+
         //Current Position error handler
         function handleLocationError(browserHasGeolocation) {
-            infowindow = mapView.infowindow;
-            infowindow.setPosition(mapView.gMap.getCenter());
+            data.infowindow = mapView.infowindow;
+            data.infowindow.setPosition(mapView.gMap.getCenter());
             var content = browserHasGeolocation ?
                 "<p><h5>Error</h5></p><p>The Geolocation service has failed.</p>" :
                 "<p><h5>Error</h5></p><p>Your browser doesn't support geolocation.</p>";
-            infowindow.setContent(content + "<p>Therefore, your search is based on Powell, OH</p>");
+            data.infowindow.setContent(content + "<p>Therefore, your search is based on Powell, OH</p>");
             mapView.infowindow.open(mapView.gMap);
         }
     },
     openInfowindow: function(place) {
-        var place = place;
+        //var place = place;
         var lat = place.position.H;
         var lng = place.position.L;
         var name = '<strong>' + place.name + '</strong>';
@@ -569,67 +704,73 @@ var mapView = {
             '&v=' + '20130815' +
             '&ll=' + lat + "," + lng +
             '&query=' + place.name;
-        var content = "";
+        var contentLink = '';
+        var setInfowindowContent = function(msg) {
+            data.infowindow.setContent(name + address + msg);
+        };
         $.ajax(wikiUrl, {
             dataType: 'jsonp',
             //Set content if successful
             success: function( response ) {
                 var articleList = response[1];
-                for (var i = 0; i < 1; i++) {
-                    var articleStr = articleList[i];
-                    if (articleStr) {
-                        var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-                        contentLink = '<p>Wiki: <a href="' + url + '" target="_blank">' + articleStr +
-                        '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
-                        mapView.infowindow.setContent(name + address + contentLink);
-                    } else {
+                var articleStr = articleList[0];
+                if (articleStr) {
+                    var url = 'http://en.wikipedia.org/wiki/' + articleStr;
+                    contentLink = '<p>Wiki: <a href="' + url + '" target="_blank">' + articleStr +
+                    '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
+                    //data.infowindow.setContent(name + address + contentLink);
+                    setInfowindowContent(contentLink);
+                } else {
 
-                        //Could not get wiki article.  Try foursquare information.
-                        $.ajax(fourSquareUrl, {
-                            dataType: 'jsonp',
-                            //Set content if successful
-                            success: function( response ) {
-                                var venues = response.response.venues;
-                                if (venues) {
-                                    var ven = venues[0];
-                                    if(ven){
-                                        if (ven.url) {
-                                            var venueURL = ven.url;
-                                            contentLink = '<p>Foursquare: <a href="' + venueURL + '" target="_blank">' + venueURL +
-                                            '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
-                                            mapView.infowindow.setContent(name + address + contentLink);
-                                        }else{
-                                            mapView.infowindow.setContent(name + address + '<p>(url unavailable)</p>');
-                                        }
+                    //Could not get wiki article.  Try foursquare information.
+                    $.ajax(fourSquareUrl, {
+                        dataType: 'jsonp',
+                        //Set content if successful
+                        success: function( response ) {
+                            var venues = response.response.venues;
+                            if (venues) {
+                                var ven = venues[0];
+                                if(ven){
+                                    if (ven.url) {
+                                        var venueURL = ven.url;
+                                        contentLink = '<p>Foursquare: <a href="' + venueURL + '" target="_blank">' + venueURL +
+                                        '<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></p>';
+                                        //data.infowindow.setContent(name + address + contentLink);
+                                        setInfowindowContent(contentLink);
                                     }else{
-                                        mapView.infowindow.setContent(name + address + '<p>(venue unavailable)</p>');
+                                        //data.infowindow.setContent(name + address + '<p><em>(url unavailable)</em></p>');
+                                        setInfowindowContent('<p><em>(url unavailable)</em></p>');
                                     }
-
                                 }else{
-                                    mapView.infowindow.setContent(name + address + '<p>(venues unavailable)</p>');
+                                    //data.infowindow.setContent(name + address + '<p><em>(venue unavailable)</em></p>');
+                                    setInfowindowContent('<p><em>(url unavailable)</em></p>');
                                 }
-                            },
-                            //Set content if fail
-                            error: function() {
-                                mapView.infowindow.setContent(name + address + '<p>(information unavailable)</p>');
+
+                            }else{
+                                //data.infowindow.setContent(name + address + '<p><em>(venues unavailable)</em></p>');
+                                setInfowindowContent('<p><em>(venues unavailable)</em></p>');
                             }
-                        });
-                    }
+                        },
+                        //Set content if fail
+                        error: function() {
+                            setInfowindowContent('<p><em>(information unavailable)</em></p>');
+                        }
+                    });
                 }
             },
             //Set content if fail
             error: function() {
-                mapView.infowindow.setContent(name + address + '<p>(wiki article unavailable)</p>');
+                setInfowindowContent('<p><em>(wiki article unavailable)</em></p>');
             }
         });
-        mapView.gMap.setCenter(place.position);
-        mapView.infowindow.open(mapView.gMap, place);
+        data.map.setCenter(place.position);
+        data.infowindow.open(data.map, place);
         //Animate marker for 2 secs
         place.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout( function(){place.setAnimation(null)}, 2000);
+        setTimeout( function(){place.setAnimation(null);}, 2000);
     },
     clearMapMarkers: function() {
-        markers = koViewModel.mapMarkers();
+        var markers = koViewModel.mapMarkers();
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
@@ -637,143 +778,46 @@ var mapView = {
     },
     createMarker: function(place) {
         var placeLoc = place.geometry.location;
-        var placeAddress = (place.vicinity == undefined) ? place.formatted_address : place.vicinity;
+        var placeAddress = (place.vicinity === undefined) ? place.formatted_address : place.vicinity;
 
         //style marker based on place-type
-        var image = "img/mi-gray-t.gif"
+        var image = "img/mi-gray-t.gif";
         var priorityType = place.types;
         if(priorityType.indexOf("restaurant") != -1) {
-            image = "img/mi-red-t.gif"
+            image = "img/mi-red-t.gif";
         }else if(priorityType.indexOf("gas_station") != -1) {
-            image = "img/mi-green-t.gif"
+            image = "img/mi-green-t.gif";
         }else if(priorityType.indexOf("lodging") != -1) {
-            image = "img/mi-orange-t.gif"
+            image = "img/mi-orange-t.gif";
         }
 
-        var marker = new google.maps.Marker({
-            map: this.gMap,
-            icon: image,
-            position: placeLoc,
-            placeId: place.place_id,
-            animation: google.maps.Animation.DROP,
-            name: place.name,
-            vicinity: placeAddress,
-            types: place.types,
-            title: place.name
-        });
+        data.marker = new google.maps.Marker(
+            {
+                map: data.map,
+                icon: image,
+                position: placeLoc,
+                placeId: place.place_id,
+                animation: google.maps.Animation.DROP,
+                name: place.name,
+                vicinity: placeAddress,
+                types: place.types,
+                title: place.name
+            });
 
         //setMap according to selectedType
         var selectedType = koViewModel.selectedType();
-        if (marker.types.indexOf(selectedType) == -1 ) {
-            marker.setMap(null)
+        if (data.marker.types.indexOf(selectedType) == -1 ) {
+            data.marker.setMap(null);
         }
 
         //add marker to koViewModel.mapMarkers
-        koViewModel.mapMarkers.push(marker);
+        koViewModel.mapMarkers.push(data.marker);
 
         //add click listener to marker
-        google.maps.event.addListener(marker, 'click', function() {
-            mapView.openInfowindow(marker);
+        google.maps.event.addListener(data.marker, 'click', function() {
+            mapView.openInfowindow(this);
         });
-        return marker;
-    },
-    initSearchPlaces: function() {
-        var input = document.getElementById('search-input');
-        var searchBox = new google.maps.places.SearchBox(input);
-        //Reset map bounds if necessary
-        mapView.gMap.addListener('bounds_changed', function() {
-            searchBox.setBounds(mapView.gMap.getBounds());
-        });
-
-        //Open infowindow for selected place
-        $("select[name='select-place']").change(function() {
-            var markerID = this.value;
-            var markers = koViewModel.mapMarkers();
-            for (var i = 0; i < markers.length; i++) {
-                if (markers[i].placeId === markerID) {
-                    mapView.openInfowindow(markers[i]);
-                }
-            }
-        });
-        //setMap on markers according to selected type
-        $("select[name='select-type']").change(function() {
-            var selectedType = this.value;
-            var markers = koViewModel.mapMarkers();
-            for (var i = 0; i < markers.length; i++) {
-                if(markers[i].types.indexOf(selectedType) == -1 ) {
-                    markers[i].setMap(null)
-                }else{
-                    markers[i].setMap(mapView.gMap)
-                    koViewModel.selectedMarker(markers[i].placeId);
-                    //TODO: Recenter viewport around all map markers
-                }
-            }
-        });
-        //Process new search
-        searchBox.addListener('places_changed', function() {
-            var places = searchBox.getPlaces();
-            if (places.length == 0) {
-                //TODO:  handle this case better
-                return;
-            }else{
-                //clear existing markers
-                mapView.clearMapMarkers();
-                //get map bounds
-                var bounds = new google.maps.LatLngBounds();
-                koViewModel.selectedType(places[0].types[0]);
-                for (var i = 0; i < places.length; i++) {
-                    mapView.createMarker(places[i]);
-                    //Set bounds to contain the new place
-                    if (places[i].geometry.viewport) {
-                        // Only geocodes have viewport.
-                        bounds.union(places[i].geometry.viewport);
-                    } else {
-                        bounds.extend(places[i].geometry.location);
-                    }
-                }
-                //Set map bounds to contain all places
-                mapView.gMap.fitBounds(bounds);
-            }
-            //Clear search box
-            input.value = "";
-        });
-    },
-    initNearbyMarkers: function() {
-        var latLng = mapView.gMap.getCenter();
-        var loc = {
-            lat: latLng.lat(),
-            lng: latLng.lng()
-        };
-
-        //TODO: Allow user to set default request values in 'user preferences'
-        var request = {
-            location: loc,
-            radius: '5000',
-            types: ['restaurant', 'lodging', 'gas_station']
-        };
-
-        service = new google.maps.places.PlacesService(mapView.gMap);
-        service.nearbySearch(request, function(results, status) {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-                var bounds = new google.maps.LatLngBounds();
-                for (var i = 0; i < results.length; i++) {
-                    var place = results[i];
-                    mapView.createMarker(place);
-                    //Set bounds to contain the new place
-                    if (place.geometry.viewport) {
-                        // Only geocodes have viewport.
-                        bounds.union(place.geometry.viewport);
-                    } else {
-                        bounds.extend(place.geometry.location);
-                    }
-                }
-                //Set map bounds to contain all places
-                mapView.gMap.fitBounds(bounds);
-            }else{
-                //TODO handle this case better
-                console.log("status NOT OK");
-            }
-        });
+        return data.marker;
     }
 };
 
@@ -804,12 +848,6 @@ var koViewModel = {
     selectedType: ko.observable("point_of_interest"),
     selectedMarker: ko.observable(data.selectedMarker),
     markerTypes: ko.observableArray(data.markerTypes),
-    userInfoOverlay: mapView.toggleOverlay(),
-    //TODO: refactor initializers
-    initializers: [
-        mapView.initSearchPlaces(),
-        mapView.initNearbyMarkers()
-        ]
+    //userInfoOverlay: mapView.toggleOverlay()
 };
-
 ko.applyBindings(koViewModel);
