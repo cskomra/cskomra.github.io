@@ -1,33 +1,126 @@
 <!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Resume</title>
-  <link href="css/style.css" rel="stylesheet">
-  <script src="js/jQuery.js"></script>
-  <script src="js/helper.js"></script>
-  <script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
-  <meta name="viewport" content="width=device-width">
-</head>
-<body>
-  <div id="main">
-    <div id="header" class="center-content clearfix">
-      <ul id="topContacts" class="flex-box"></ul>
-    </div>
-    <div id="biopic" style="clear: both;"></div>
-    <div id="workExperience" class="gray"></div>
-    <div id="projects"></div>
-    <div id="education" class="gray"></div>
-    <div id="mapDiv"></div>
-    <div id="letsConnect" class="dark-gray">
-      <h2 class="orange center-text">Let's Connect</h2>
-        <ul id="footerContacts" class="flex-box">
-      </ul>
-    </div>
-  </div>
-  <script src="js/resumeBuilder.js"></script>
-  <script>
-    octopus.init();
-  </script>
-</body>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Portfolio</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:100,300" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="css/style.min.css">
+
+    </head>
+    <body>
+        <div class="container">
+            <header class="row">
+                <div class="col-md-2">
+                    <img src="img/connie05.jpg" class="img-responsive title-logo" alt="logo">
+                </div>
+                <div class="col-md-10 text-center text-uppercase title-info">
+                    <h1 class="title-super text-thin">Connie Skomra</h1>
+                    <h4 class="sub-title-super">Full Stack Engineer</h4>
+                </div>
+            </header>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <hr class="banner_top">
+                    <img src="img/stones_large.jpg" class="img-responsive" alt="serene picture of lakeside sandy beach with calming waves and a set of stacked smooth stones on the right side">
+                    <hr class="banner_btm">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="text-muted">Featured Work</h2>
+                </div>
+            </div>
+            <section class="featured-work">
+                <div class="row text-center">
+                    <div class="col-md-4 work-section">
+                        <img src="img/bugevaders_cropped.jpg" alt="bug evaders game image" id="bug-evaders"
+                        class="img-responsive project-img" data-toggle="modal" data-target="#myModal-1">
+                        <h3 class="display-4 work-title"><a href="https://github.com/cskomra/frontend-nanodegree-arcade-game" target="_blank">Bug Evaders</a></h3>
+                    </div>
+                    <div class="col-md-4 work-section">
+                        <img src="img/mediacenter_cropped.jpg" alt="media center page image"
+                        class="img-responsive project-img" data-toggle="modal" data-target="#myModal-2">
+                        <h3 class="display-4 work-title"><a href="https://github.com/cskomra/cskomra.github.io/tree/master/projects/mediacenter" target="_blank">Media Center</a></h3>
+                    </div>
+                    <div class="col-md-4 work-section">
+                        <img src="img/itsnearby_cropped.jpg" alt="neighborhood map image"
+                        class="img-responsive project-img" data-toggle="modal" data-target="#myModal-3">
+                        <h3 class="display-4 work-title"><a href="https://github.com/cskomra/neighborhood-map" target="_blank">Neighborhood Map</a></h3>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal-1" role="dialog" aria-labelledby="ModalLabel1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                        <h4 class="modal-title" id="ModalLabel1">Bug Evaders Arcade Game</h4>
+                    </div>
+                    <div class="modal-body">
+                            <p>
+                                <img class="img-responsive modal-img" src="img/char-boy.png" alt="">
+                                This game is much like Frogger in that, as a player, you are trying to cross a sidewalk full of bugs in order to get to the other side. Making it to the other side gets you to the next level. Each one of the three levels has a unique set of bugs that travels at different speeds, making the game more challenging.
+                                Click <a href="http://cskomra.github.io/projects/arcadegame/index.html" target="_blank">here</a> to try it out.
+                            </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal-2" role="dialog" aria-labelledby="ModalLabel2" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                        <h4 class="modal-title" id="ModalLabel2">Media Center</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <img class="img-responsive modal-img" src="img/hobbit_compressed.jpg" alt="">
+                            This movie trailer website was built in object oriented Python. Two main pages, Movie Trailers and TV Show Trailers, each allow you click on media art to watch the trailer.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal-3" role="dialog" aria-labelledby="ModalLabel3" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                        <h4 class="modal-title" id="ModalLabel3">Neighborhood Map</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <img class="img-responsive modal-img" src="img/map-marker_resized.png" alt="">
+                            This ia a single-page web application built using the Knockout framework.  It displays a Google Map of an area with various points of interest. Users can search all included landmarks.  When a marker is selected, additional information about the selected landmark is presented from either FourSquare or Wikipedia.
+                            Click <a href="http://cskomra.github.io/projects/neighborhood-map/index.html" target="_blank">here</a> to try it out.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
 </html>

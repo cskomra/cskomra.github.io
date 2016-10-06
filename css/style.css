@@ -1,236 +1,90 @@
-* {
-  padding: 0;
-  margin: 0;
-  font-family: "Roboto", sans-serif;
+body {
+    font-family: 'Lato', sans-serif;
+    color: #2d3c49;
+    font-weight: 300;
 }
 
-.clearfix {
-  overflow: auto;
+.banner_top {
+    background-color: gray;
+    height: 5px;
 }
 
-.education-entry, .work-entry, .project-entry {
-  padding: 0 5% 0 5%;
-}
-
-h1 {
-  font-size: 40px;
-  color: #f5a623;
-  line-height: 48px;
-  display: inline;
-}
-
-h2 {
-  font-weight: bold;
-  font-size: 24px;
-  color: #999;
-  line-height: 29px;
-  padding: 10px;
-}
-
-h3 {
-  font-style: italic;
-  font-size: 18px;
-  color: #757575;
-  line-height: 22px;
-}
-
-h4 {
-  font-weight: bold;
-  font-size: 14px;
-  color: #4a4a4a;
-  line-height: 17px;
-}
-
-h2,
-h3,
-h4,
-h5 {
-  padding: 10px 5%;
-}
-
-.date-text {
-  font-style: italic;
-  font-size: 14px;
-  color: #999;
-  line-height: 16px;
-  float: left;
-}
-
-.pos-text {
-  font-size: 14px;
-}
-
-.oc-date-text {
-  font-style: italic;
-  font-size: 14px;
-  color: #999;
-  line-height: 16px;
-  float: right;
-
-}
-
-.location-text {
-  font-style: italic;
-  font-size: 14px;
-  color: #999;
-  line-height: 16px;
-  float: right;
-
-}
-
-p {
-  font-size: 14px;
-  color: #333;
-  line-height: 21px;
+.banner_btm {
+    background-color: gray;
+    height: 2px;
 }
 
 a {
-  color: #1199c3;
-  text-decoration: none;
-  margin: 10px 0 0 0;
-  display: block;
+    color: #2d3c49;
+
 }
 
-.welcome-message {
-  font-style: italic;
-  font-size: 18px;
-  color: #f3f3f3;
-  line-height: 28px;
+.project-img {
+    width: 100%;
 }
 
-.orange-text {
-  color: #f5a623;
+.text-muted {
+    color: #4c4c4c;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-#role {
-  font-size: 20px;
+.text-thin {
+    font-weight: 100;
 }
 
-#skills {
-  text-align: left;
+.title-super {
+    font-size: 60px;
 }
 
-#skillsH3 {
-  color: #f5ae23;
-  display: none;
+.title-logo {
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 5px solid gray;
+    border-radius: 18px;
 }
 
-.orange {
-  background-color: #f5ae23;
+.modal-img {
+    margin: 0 0 20px 20px;
 }
 
-.orange-text {
-  color: #f5ae23;
+.work-section {
+    padding-bottom: 5px;
+    margin-bottom: 60px;
+    border-bottom: thin solid gray;
 }
 
-.white-text {
-  font-weight: bold;
-  color: #fff;
+.work-title {
+    font-weight: bold;
+    margin-bottom: 15px;
 }
 
-.gray {
-  background-color: #f3f3f3;
-  padding: 0 0 20px 0;
-  clear:both;
+div.row.text-center {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-.dark-gray {
-  background-color: #4a4a4a;
+p a {
+    text-decoration: underline;
 }
 
-#header,
-#footerContacts {
-  background-color: #484848;
+@media screen and (max-width: 550px) {
+    .title-super {
+        font-size: 40px;
+        font-weight: 200;
+    }
+
+    .text-muted {
+        text-align: center;
+    }
 }
 
-.flex-box {
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 10px;
-}
+@media screen and (min-width: 1200px) {
+    .title-super {
+        text-align: right;
+    }
 
-.center-content {
-  padding: 2.5% 5%;
-}
-
-ul {
-  list-style-type: none;
-}
-
-.biopic {
-  float: left;
-  padding: 10px;
-  width: 200px;
-  display: none;
-}
-
-img {
-  padding: 10px;
-}
-
-/* Bar chart stuff */
-.chart div {
-  font: 10px sans-serif;
-  background-color: #4a4a4a;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  height: 12px;
-  color: white;
-  display: inline-block;
-}
-
-span {
-  padding: 5px;
-}
-
-#letsConnect {
-  text-align: center;
-  font-size: 12px;
-}
-
-@media only screen and (max-width: 1024px) {
-  #letsConnect {
-    margin: 5% 0 0 0;
-  }
-}
-
-@media only screen and (max-width:900px) {
-  .biopic {
-    width: 175px;
-  }
-}
-
-@media only screen and (max-width: 750px) {
-  #letsConnect {
-    margin: 10% 0 0 0;
-  }
-  .biopic {
-    width: 150px;
-  }
-  .welcome-message {
-    display: none;
-  }
-}
-
-#map {
-  display: block;
-  height: 100%;
-  margin: 0 5%;
-}
-
-#mapDiv {
-  height: 400px;
-  width: 100%;
-  padding: 0 0 5% 0;
-}
-
-@media only screen and (min-width: 750px) {
-  #skillsH3,
-  .biopic {
-    display: block;
-  }
+    .sub-title-super {
+        text-align: right;
+    }
 }

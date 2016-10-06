@@ -1,0 +1,29 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "A portfolio to showcase project work",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cskomra/portfolio.git"
+  },
+  "keywords": [
+    "portfolio",
+    "Udacity"
+  ],
+  "author": "Connie Skomra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cskomra/portfolio/issues"
+  },
+  "homepage": "https://github.com/cskomra/portfolio",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "load-grunt-tasks": "^3.5.0"
+  }
+}
