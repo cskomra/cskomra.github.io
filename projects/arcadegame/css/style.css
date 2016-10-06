@@ -1,0 +1,13 @@
+body {
+    text-align: center;
+}
+
+p {
+	font: bold 18px;
+}
+
+#game-status {
+	color: red;
+	font-size: 24px;
+	margin: 12px;
+}
