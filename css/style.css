@@ -4,6 +4,10 @@ body {
     font-weight: 300;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 .banner_top {
     background-color: gray;
     height: 5px;
