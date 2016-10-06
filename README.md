@@ -5,4 +5,4 @@
 ## Work Experience ##
 ## Projects ##
 ## Education ##
-## Where I've Lived and Worked ##
+## Places I've Lived and Worked ##
