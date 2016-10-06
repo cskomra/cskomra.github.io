@@ -5,7 +5,7 @@ var model = {
 	//===== MODEL OBJECTS =====
 	bio: {
 		"name": "Connie Skomra",
-		"role": "  Founder",
+		"role": "  Co-founder",
 		"contacts": {
 			"mobile": "740-525-5327",
 			"email": "connie@cskomra.com",
