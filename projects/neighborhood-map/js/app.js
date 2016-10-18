@@ -632,7 +632,7 @@ var appInit = {
     }
 };
 
-appInit.loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBScrNGYANSOM7AZq8lsQ6SqNiawp7duIU&libraries=places&callback=appInit.initialize',
+appInit.loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAHSznsKD61KFBs4UJSJiFcfvyg9qHf4pQ&libraries=places&callback=appInit.initialize',
     false);  //Reference:  http://jsfiddle.net/doktormolle/7cu2f/
 
 var mapView = {
