@@ -72,6 +72,10 @@ p a {
     text-decoration: underline;
 }
 
+.text-underline {
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 550px) {
     .title-super {
         font-size: 40px;
